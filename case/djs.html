@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>倒计时demo</title>
+</head>
+
+<body>
+<div id='djs'></div>
+<script>
+	var Timer = function(starttime, endtime, id){
+    this.starttime = starttime;
+    this.endtime = endtime;
+    this.doTime = function() {
+    	var string = '';
+    	if (this.starttime < this.endtime)
+    	{
+    		 var num = this.endtime - this.starttime;
+    	     //string = '剩';
+        	 var day = Math.floor(num / 86400);
+             var hour = Math.floor(  num / 3600)<10?'0'+ Math.floor(  num / 3600):Math.floor(  num / 3600);
+             var min = hour == 0 ? Math.floor( num / 60) : Math.floor( (num - hour * 3600) / 60);
+             var min = min < 10?'0'+min : min;
+             var sec = num % 60 < 10? '0'+num % 60 : num % 60;
+            
+             string += day > 0 ? day + "天" : "";
+			 if (day > 0)
+			 {
+				 string = day + "天";
+				 var minhour = hour % 24 <10 ? '0'+(hour % 24) : hour % 24;
+				 string += minhour > 0 ? minhour + ':' : '';
+				 string += min > 0 ? min + ':' : '';
+				 string += sec;
+			 } 
+			 else
+			 {
+				 string = hour > 0 ? hour + ':' : '';
+				 string += min > 0 ? min + ':' : '';
+				 string += sec;  
+			 }               	
+    	}
+    	
+    	document.getElementById(id).innerHTML = string;
+    	var self = this;
+    	var fun = function() {
+    		self.starttime++;
+    		self.doTime();
+    	}
+    	
+    	if (string != '')
+    	{
+    		setTimeout(fun, 1000);
+    	}
+    	
+    }
+    
+    this.doTime();
+};
+new Timer(new Date().getTime(),new Date().getTime()+9999,'djs')
+</script>
+</body>
+</html>
