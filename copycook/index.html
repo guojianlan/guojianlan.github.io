@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="YES" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<meta charset="UTF-8">
+	<title>我们在这 我们在乎</title>
+	<!-- scarlet | LXU studio http://lxustudio.com -->
+	<link rel="stylesheet" href="css/normalize.css">
+  	<link rel="stylesheet" href="css/idangerous.swiper.css">
+	<link rel="stylesheet" href="css/main.css">
+    <style>
+    	.u-audio { position: absolute; top: 0; right: 0; width: 74px; height: 63px; z-index: 200; }
+		.u-audio .res_audio { position: absolute; top: 0; left: 0; opacity: 0; height: 0; width: 0; }
+		.u-audio .btn_audio { width: 100%;height: 42px; }
+		.u-audio .btn_audio .audio_open { display: inline-block; position: absolute; right: 18px; bottom: 0; width: 42px; height: 42px; line-height: 42px;}
+		.u-audio .btn_audio .audio_open.close { background-position: 0 -42px; }
+		.u-audio .btn_audio strong.z-hide { opacity: 0; }
+		.u-audio .btn_audio strong.z-move { 
+			-webkit-transition:opacity 0.5s;
+  	 		  -moz-transition:opacity 0.5s;
+	   		 -ms-transition:opacity 0.5s;
+	   			  -o-transition:opacity 0.5s;
+	     	   transition:opacity 0.5s;
+		}
+		.u-audio.z-low { z-index: 1; }
+		#s0{background:#333;}
+		#s1{background:#666;}
+		#s2{background:#999;}
+    </style>
+  	<script src="js/jquery.js"></script>
+	<script src="js/swiper.min.js"></script>
+</head>
+<body>
+ 	<section id="audio" class="u-audio f-hide" data-src="3431.mp3"> 
+            <p id="coffee_flow" class="btn_audio">
+                <strong class="txt_audio z-hide f-hide">关闭</strong>
+                <span class="css_sprite audio_open"></span>
+            </p> 
+      </section>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<section class="swiper-slide" id="s0">
+					<div class="b1">1</div>
+			</section>
+			<section class="swiper-slide" id="s1">
+			
+				<div class="w3">2</div>
+			</section>
+			<section class="swiper-slide" id="s2">
+				<div class="w3">3</div>
+			</section>
+			
+		</div>
+	</div>
+    <script src="js/Zepto.js"></script>
+    <script src="js/coffee.js"></script>
+     <script>
+          	var guojian={
+				_audioNode		: Zepto('.u-audio'),						// 声音模块
+				_audio			: null,									// 声音对象
+				_audio_val		: true,									// 声音是否开启控
+				audio_init : function(){
+					var options_audio = {
+						loop: true,
+          				preload: "auto",
+         		   		src: guojian._audioNode.attr('data-src')
+					}
+					guojian._audio = new Audio(); 
+					
+					for(var key in options_audio){
+						if(options_audio.hasOwnProperty(key) && (key in guojian._audio)){
+							guojian._audio[key] = options_audio[key];
+						}
+					}
+					guojian._audio.load();
+					guojian._audio.play();
+					if(!guojian._audio) return;
+						setTimeout(function(){
+							guojian._audioNode.removeClass('f-hide');
+							guojian._audio.play();
+						},100)
+					// 声音启动
+						Zepto(document).one("touchstart", function(){
+						guojian._audio.play();
+					});
+				},
+				audio_addEvent : function(){
+					if(guojian._audioNode.length<=0) return;
+					var txt = guojian._audioNode.find('.txt_audio'),
+					time_txt = null;
+					guojian._audioNode.find('.btn_audio').on('click',guojian.audio_contorl);
+					
+					Zepto(guojian._audio).on('play',function(){
+						guojian._audio_val = false;
+						audio_txt(txt,true,time_txt);
+						// 开启音符冒泡
+						Zepto.fn.coffee.start();
+						Zepto.fn.coffee;
+						Zepto('.coffee-steam-box').show(500);
+					})
+				
+				// 声音关闭事件
+					Zepto(guojian._audio).on('pause',function(){
+						audio_txt(txt,false,time_txt)
+				
+				// 关闭音符冒泡
+						Zepto.fn.coffee.stop();
+						Zepto('.coffee-steam-box').hide(500);
+					})
+				
+				function audio_txt(txt,val,time_txt){
+					if(val) txt.text('打开');
+					else txt.text('关闭');
+				
+					if(time_txt) clearTimeout(time_txt);
+				
+					txt.removeClass('z-move z-hide');
+					time_txt = setTimeout(function(){
+						txt.addClass('z-move').addClass('z-hide');
+					},1000)
+				}
+			},
+			audio_contorl : function(){
+				if(!guojian._audio_val){
+					guojian.audio_stop();
+					guojian._audioNode.find('.audio_open').addClass("close");
+				}else{
+					guojian.audio_play();
+					guojian._audioNode.find('.audio_open').removeClass("close");
+				}
+			},	
+			
+			// 声音播放
+			audio_play : function(){
+				guojian._audio_val = false;
+				if(guojian._audio) guojian._audio.play();
+			},
+			
+			// 声音停止
+			audio_stop	: function(){
+				guojian._audio_val = true;
+				if(guojian._audio) guojian._audio.pause(); 
+			}
+			}
+			Zepto('#coffee_flow').coffee({
+				steams				: ["<img src='images/audio_widget.png' />","<images src='images/audio_widget.png' />"], 
+				steamHeight			: 70,
+				steamWidth			: 20 
+			});
+			guojian.audio_init();
+			guojian.audio_addEvent();
+          </script>
+	<script>
+	$(document).ready(function () {
+    var a = new Swiper('.swiper-container', {
+        mode: 'vertical',
+        onSlideChangeStart: function () {
+            switch (a.activeIndex) {
+                case 0:
+                    $('#s0').addClass('ani');
+                    break;
+                case 1:
+                    $('#s1').addClass('ani');
+            }
+        },
+        onSlideChangeEnd: function () {
+            switch (a.activeIndex) {
+                case 0:
+                    $('#s1').removeClass('ani');
+                    break;
+                case 1:
+                    $('#s0').removeClass('ani'),
+                    $('#s2').removeClass('ani')
+			}
+        }
+    });
+    $('#s0').addClass('ani');
+})
+
+	</script>
+</body>
+</html>

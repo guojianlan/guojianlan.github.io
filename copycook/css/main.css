@@ -1,0 +1,32 @@
+a {
+    opacity: 0;
+}
+.swiper-container {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+.swiper-slide {
+    overflow: hidden;
+    position: relative;
+}
+.swiper-slide * {
+    opacity: 1;
+    position: absolute;
+}
+.bg, .bg * {
+    opacity: 1;
+}
+.layer {
+    height: 100%;
+    opacity: 1;
+    width: 100%;
+}
+.css_sprite { background-image:url(../images/css_sprite.png)!important;  background-repeat: no-repeat!important; } 
+/**
+ * = function 功能样式
+ *******************************************************************************************************/
+.f-ofh { overflow: hidden; height: 100%!important; } 		/*隐藏内容-overflow-hidden*/
+.f-hide { display: none!important; } 						/*隐藏内容*/
+
+

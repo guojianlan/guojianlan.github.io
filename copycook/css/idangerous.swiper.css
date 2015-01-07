@@ -1,0 +1,42 @@
+
+.swiper-container {
+    backface-visibility: hidden;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.swiper-wrapper {
+    box-sizing: content-box;
+    position: relative;
+    transform: translate3d(0px, 0px, 0px);
+    transition-duration: 0s;
+    transition-property: transform, left, top;
+    transition-timing-function: ease;
+    width: 100%;
+}
+.swiper-free-mode > .swiper-wrapper {
+    margin: 0 auto;
+    transition-timing-function: ease-out;
+}
+.swiper-slide {
+    float: left;
+}
+.swiper-wp8-horizontal {
+}
+.swiper-wp8-vertical {
+}
+.swiper-container {
+}
+.swiper-slide {
+}
+.swiper-slide-active {
+}
+.swiper-slide-visible {
+}
+.swiper-pagination-switch {
+}
+.swiper-active-switch {
+}
+.swiper-visible-switch {
+}
