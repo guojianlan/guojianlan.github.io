@@ -1,0 +1,308 @@
+<!DOCTYPE >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+<title>小jiàn人</title>
+<script type="text/javascript" src="js/tiny.js"></script>
+<style>
+*{ margin:0; padding:0;font-family: 微软雅黑,黑体,宋体;}
+body{padding:0;margin:0;}
+.boxWH{width:100%;height:100%;}
+.zhezhaoc{width:100%;height:100%; z-index:1000; background:#000;opacity:0.6; filter:Alpha(opacity=60); background:url(images/loding1.gif) no-repeat center; background-size:50px 50px;}
+.box{background:#fff; overflow:hidden;height:320px; }
+ul,li{ outline-style:none; list-style:none; margin:0; padding:0;}
+ul{position:relative;height:100%;; top:0px;width:100%;}
+li{height:100%; position:absolute;width:100%;}
+.weidaonext{height:10%; background-size:35px; background-repeat:no-repeat; background-position:center;opacity:0.5; filter:Alpha(opacity=50); }
+.weidao{height:15%;  background-size:60px;background-repeat:no-repeat; background-position:center; }
+.xianzai{height:60%; background-size:140px;background-repeat:no-repeat; background-position:center;}
+.guoqu{height:15%; background-size:30px;;background-repeat:no-repeat; background-position:center;opacity:0.5; filter:Alpha(opacity=50); color:#999;}
+.page{display:block;width:40%;height:22px;line-height:22px; text-align:left; padding-left:28px; padding-top:4px;  background-size:22px; font-size:22px;text-shadow:-1px 1px 2px #000;color:#000; float:left;}
+.time{display:block;width:40%;height:22px;line-height:22px;text-align:right; padding-right:28px; padding-top:4px;  background-size:22px; font-size:13px;text-shadow:-1px 1px 2px #000;color:#000; float:right;}
+.ms{background:#000;color:#fff;padding:0 5px;}
+</style>
+<script>
+	 	__T.extend({
+		startMove:function(obj,json,fnEnd){
+			clearInterval(obj.timer);        
+      	    obj.timer=setInterval(function(){
+            var isEnd = true;
+            for (var attr in json){
+                var cur=0;
+                if(attr=="opacity"){
+                    cur = Math.round(parseFloat(__T.getStyle(obj,attr))*100);
+                }else{
+                    cur = parseInt(__T.getStyle(obj,attr));
+                }
+                var speed = (json[attr]-cur)/1.28;
+                speed=speed>0?Math.ceil(speed):Math.floor(speed);
+                if(json[attr]!=cur){
+                    isEnd=false;
+                }
+                if(attr=='opacity'){
+                    obj.style.filter='alpha(opacity:'+(cur+speed)+')'
+					obj.style.opacity=(cur+speed)/100;
+                }else{
+                    obj.style[attr]=cur+speed+"px";
+                }
+            }
+            if(isEnd){
+                    clearInterval(obj.timer);    
+                    if(fnEnd) fnEnd();
+            }
+      		},30);
+   	   	},
+		getStyle:function(obj,style){
+			if(obj.currentStyle){
+           	 	 return obj.currentStyle[style]; 
+     	     }else{
+             	return getComputedStyle(obj,false)[style]; 
+             }
+		},
+	})
+</script>
+</head>
+
+<body>
+<div class="zhezhaoc" id="zhezhaoc"></div>
+<div style="display:none">
+    <img src="images/cw/1.gif" >
+    <img src="images/cw/2.gif" >
+    <img src="images/cw/3.gif" >
+    <img src="images/cw/4.gif" >
+    <img src="images/cw/5.gif" >
+    <img src="images/cw/6.gif" >
+    <img src="images/cw/7.gif" >
+    <img src="images/cw/8.gif" >
+    <img src="images/hd/1.gif" >
+    <img src="images/hd/2.gif" >
+    <img src="images/hd/3.gif" >
+    <img src="images/hd/4.gif" >
+    <img src="images/hd/5.gif" >
+    <img src="images/hd/6.gif" >
+    <img src="images/hd/7.gif" >
+    <img src="images/hd/8.gif" >
+    <img src="images/gq/1.gif" >
+    <img src="images/gq/2.gif" >
+    <img src="images/gq/3.gif" >
+    <img src="images/gq/4.gif" >
+    <img src="images/gq/5.gif" >
+    <img src="images/gq/6.gif" >
+    <img src="images/gq/7.gif" >
+    <img src="images/gq/8.gif" >
+</div>
+<!--加载图片-->
+<div class="boxWH">
+	<b class="page" id="page"></b>
+    <div class="time" ><span id="time" class="ms">45</span>秒</div>
+    <div style="clear:both;"></div>
+    <div class="box" id="box">
+        <ul id="ul1">
+        </ul>
+    </div>
+</div>
+<script>
+	var Height =window.innerHeight-60;
+	$("#box").style.height=Height+"px";
+	//获取高度
+	function xiaojr(page){
+		this.arr=[];
+		this.start=0;//计算现在是第几个东西，猜中方向后加1
+		this.index=0;//计算现在是第几个li
+		this.oUL = $("#ul1");
+		this.page=page; // 分数从哪里开始
+		this.timer=null;//定时器，多少秒不滑动就会失败
+		this.liHeigh=window.innerHeight-60;
+		this.dix = 0; //点击时x的坐标
+		this.diy = 0;//点击时y的坐标
+		this.time=null;
+		this.times=$("#time").innerHTML;
+	}
+	xiaojr.prototype={
+		init:function(){
+			this.srartArr();
+			var This = this;
+			$("#page").innerHTML=This.page;
+			$("#box").style.height=this.liHeigh?this.liHeigh:Height;
+			$.hide($("#zhezhaoc"));
+			for(var i=0;i<3;i++){
+				this.createLi();
+			}
+			//创建3个li
+			var aLi = This.oUL.getElementsByTagName("li");
+			var len = aLi.length;
+			document.ontouchstart=function(){
+				This.moveswipe(This);
+			}
+			document.ontouchend=function(){
+				This.moveswipe(This);
+			}
+			document.ontouchmove=function(){
+				This.moveswipe(This);
+			}
+			$.bind(window,"orientationchange",function(){
+				if(window.orientation==90||window.orientation==-90){
+					$.show($("#zhezhaoc"));
+					$("#page").innerHTML="";
+					alert("此游戏暂不支持横屏,一秒后将回到开始游戏界面！");
+					setTimeout(function(){
+						window.location = "index.html";
+					},1000);
+					return false;
+				}
+			})
+		},
+		settime:function(){
+			var This = this;
+			this.timer=setInterval(function(){
+				clearInterval(This.time);
+				This.drawdiv();
+			},2000)
+		},
+		drawdiv:function(){
+			document.ontouchstart=function(){
+					return false;
+			};
+			document.ontouchend=function(){
+					return false;
+			};
+			document.ontouchmove=function(){
+					return false;
+			};
+			var This = this;
+			var oli = This.oUL.getElementsByTagName("li")[This.start];
+			var odiv = $(".xianzai",oli)[0];
+			odiv.style.backgroundImage="url(./images/cw/"+This.arr[This.start]+".gif)";
+			clearInterval(This.timer);
+			setTimeout(function(){
+				window.location = "gspy.html?page="+This.page+"&fenshu="+$.getCookie("fenshu");
+			},2000);
+		},
+		createLi:function(){
+			oli = $.createElement("li");
+			oli.index = this.index;  //确定现在是第几个东西
+			oli.shoushi = this.arr[this.index]  //确定现在生成的哪一种手势
+			oli.style.top=-(this.index*this.liHeigh)+"px";
+			this.creatrDiv(oli,this.index);
+			this.index++;			
+			this.oUL.appendChild(oli);
+		},
+		srartArr:function(){
+			for(var i=0;i<1000;i++){
+				this.arr.push(Math.ceil(Math.random()*8));
+			}
+		},
+		creatrDiv:function(obj,index){
+			var odivwn = $.createElement("div");
+			odivwn.className="weidaonext";
+			odivwn.style.backgroundImage="url(./images/hd/"+this.arr[index+2]+".gif)";
+			obj.appendChild(odivwn);
+			var odivw = $.createElement("div");
+			odivw.className="weidao";
+			odivw.style.backgroundImage="url(./images/hd/"+this.arr[index+1]+".gif)";
+			obj.appendChild(odivw);
+			var odivx = $.createElement("div");		
+			odivx.className="xianzai";
+			odivx.style.backgroundImage="url(./images/hd/"+this.arr[index]+".gif)";
+			obj.appendChild(odivx);
+			if(index!=0){
+				var odivg = $.createElement("div");		
+				odivg.className="guoqu";
+				odivg.style.backgroundImage="url(./images/gq/"+this.arr[index-1]+".gif)";
+				obj.appendChild(odivg);
+			}else{
+				var odivg = $.createElement("div");		
+				odivg.className="guoqu";
+				odivg.innerHTML="滑动开始";
+				odivg.style.textAlign="center";
+				obj.appendChild(odivg);
+			}
+		},
+		drawMove:function(){
+			var This = this;
+			if(This.start==0){
+				This.time=setInterval(function(){
+					var time  = $("#time");
+					time.innerHTML=--This.times;
+					if(This.times<=0){
+						This.drawdiv();
+						clearInterval(This.time);
+					}
+				},1000);
+			}
+			$.startMove(This.oUL,{"top":(This.start+1)*This.liHeigh},function(){
+							This.start++;
+							This.page++;
+							$("#page").innerHTML=This.page;
+							This.createLi();
+							clearInterval(This.timer);
+							This.settime();
+							//先关闭定时器然后再计时
+			});
+		},
+		moveswipe:function(This,ev){
+			var This = This;
+			var dixn = 0;
+			var diyn = 0;
+			var ev = ev||window.event;
+			switch(ev.type){
+				case "touchstart":
+					
+					This.dix=ev.touches[0].screenX;
+					This.diy=ev.touches[0].screenY;
+				break;
+				case "touchend":
+					dixn=ev.changedTouches[0].screenX;
+					diyn=ev.changedTouches[0].screenY;
+					if(Math.abs(dixn-This.dix)<30 && Math.abs(diyn-This.diy)<30){
+						This.dix=0;
+						This.diy=0;
+						return ;
+					}else if((This.arr[This.start]==1 || This.arr[This.start]==2) && dixn-This.dix>=30 && (Math.abs(dixn-This.dix)-Math.abs(diyn-This.diy))>0 ){ //向右
+						This.drawMove();
+					}else if((This.arr[This.start]==3 || This.arr[This.start]==4) && dixn-This.dix<=-30 && (Math.abs(dixn-This.dix)-Math.abs(diyn-This.diy))>0){ //向左
+						This.drawMove();
+					}else if((This.arr[This.start]==5 || This.arr[This.start]==6) && diyn-This.diy<=-30 && (Math.abs(diyn-This.diy)-Math.abs(dixn-This.dix))>0){   //向上
+						This.drawMove();
+					}else if((This.arr[This.start]==7 || This.arr[This.start]==8) && diyn-This.diy>=30 && (Math.abs(diyn-This.diy)-Math.abs(dixn-This.dix))>0){   //向下
+						This.drawMove();
+					}else{
+						if($.getCookie("fenshu")<This.page){
+							$.setCookie("fenshu",This.page);
+						}
+						clearInterval(This.time);
+						This.drawdiv();
+						
+					}
+					This.dix=0;
+					This.diy=0;
+				break;
+				case "touchmove":
+					dixn=ev.changedTouches[0].screenX;
+					diyn=ev.changedTouches[0].screenY;
+					ev.preventDefault();
+					return false;
+				break;
+			}
+		}
+		
+	}
+</script>
+<script>
+	//横屏不进入游戏
+	window.onload=function(){
+		if(window.orientation==90||window.orientation==-90){
+				$.show($("#zhezhaoc"));
+				$("#page").innerHTML="";
+				alert("此游戏暂不支持横屏,一秒后将回到开始游戏界面！");
+				setTimeout(function(){
+					window.location = "index.html";
+				},1000)
+		}else{
+			new xiaojr(0).init();
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no;">
+<title>小jiàn人</title>
+<style>
+*{ margin:0; padding:0;font-family: 微软雅黑,黑体,宋体; font-size:13px;}
+
+.box{margin:19px 30px;}
+.box_c{border:1px solid #000; border-radius:8px;height:220px; background:#000;}
+h1,h2,h3,h4,h5{font-weight:normal;margin:0;padding:0;list-style:none; }
+.title{font-size:20px;line-height:20px; text-align:center; margin-top:32px;color:#fff;}
+.page{font-size:36px; height:36px; line-height:36px;text-align:center;margin:30px 0;text-shadow:-1px 1px 2px #fff;color:#fff;}
+.maxpage{font-size:18px;height:18px; line-height:18px;text-align:center;color:#fff;margin-bottom:20px;}
+.ms{color:#fff;line-height:18px;text-align:center;font-size:13px;}
+.maxpage span{font-size:18px;}
+a{outline:none; star:expression(this.onFocus=this.blur()); text-decoration:none; background:none;}
+.next span{display:block; height:60px; background:#000; margin-top:15px; text-align:center; line-height:60px;color:#FFF; font-size:22px;border-radius:8px;width:45%;float:left;}
+.xm span{display:block; height:60px; width:45%;background:#000;margin-top:15px;text-align:center; line-height:60px;color:#FFF;font-size:22px;border-radius:8px;float:right;}
+.gd span{display:block; height:60px;background:#000;margin-top:15px;text-align:center; line-height:60px;color:#FFF;font-size:22px;border-radius:8px;margin-bottom:65px;}
+.zechaoc{width:100%;height:100%; background:#000; opacity:0.7; filter:Alpha(opacity=70); position:absolute; z-index:99;top:0px;left:0px;}
+.fenxiang{width:100%; height:240px; position:absolute; z-index:100;top:2px;left:0px; }
+.fenxiang .zhe{margin:17px 30px; background:url(images/fx.gif) no-repeat center #fff; height:230px;text-align:center; position:relative; border-radius:7px; background-size:224px;}
+.border{width:0;height:0;border:10px solid transparent; border-bottom:10px solid #fff;border-right:10px solid #fff;position:absolute; top:-14px; right:0px;}
+.downf{position:fixed;bottom:0px;width:100%;background:#ff6990;height:50px;opacity:0.8; filter:Alpha(opacity=80);}
+.down{display:block;background: url(images/lmb.jpg)  no-repeat 15px center;padding-left:50px;padding-right:15px; background-size:30px 30px; cursor:pointer; margin:0 auto;max-width:575px;height:50px;}
+.down h1{color:#fff;padding-top:8px;float:left;font-size:16px;line-height:18px;}
+.down h2{color:#fff;float:right; font-size:15px; border-radius:5px; -moz-border-radius:5px; background:#44b549;width:50px;height:25px;line-height:25px; text-align:center; margin-top:12px;}
+
+</style>
+</head>
+
+<body>
+<div style="display:none;">
+<img src="images/fx_p.gif"> 
+<img src="images/fx.gif"> 
+</div>
+<div class="zechaoc" id="zechaoc" style="display:none;">
+</div>
+<div class="fenxiang" id="fenxiang" style="display:none;">
+	<div class="zhe">
+		<div class="border"></div>
+        <div class="fx" ></div>
+    </div>
+</div>
+<div class="box">
+	<div class="box_c">
+    	<h1 class="title">掰弯了小jiàn人</h1>
+        <h2 class="page" id="page">32</h2>
+        <h3 class="maxpage">最佳成绩：<span>95</span></h3>
+        <h4 class="ms">目前处于45秒模式</h4>
+    </div>
+        <b class="xm" id="xm"><span id="xum">升级60秒</span></b>
+        <div class="next" id="next"><span>再来一次</span></div>
+        <div style=" clear:both"></div>
+        <div class="gd" id="gd"><span>更多游戏</span></div>
+</div>
+<div class="downf">
+<a class="down">
+  <h1>辣妈帮<br />最具人气的女性手机社区</h1>
+  <h2>下载</h2>
+</a>
+</div>
+<script>
+		
+		 var document = document.getElementById("xm");
+		 xm.onclick=function(){
+			 xm.style.backgroundColor="#000";
+			document.getElementById("zechaoc").style.display="block";
+			document.getElementById("fenxiang").style.display="block";
+			return false;
+		}
+		var zechaoc = document.getElementById("zechaoc");
+		zechaoc.onclick=function(){
+			document.getElementById("zechaoc").style.display="none";
+			document.getElementById("fenxiang").style.display="none";
+			return false;
+		}
+		var fenxiang = document.getElementById("fenxiang");
+		fenxiang.onclick=function(){
+			document.getElementById("zechaoc").style.display="none";
+			document.getElementById("fenxiang").style.display="none";
+			return false;
+		}
+		var next = document.getElementById("next");
+		next.onclick=function(){
+			window.location="youxi.html"
+		}
+		var gd = document.getElementById("gd");
+		gd.onclick=function(){
+			window.location="http://mp.weixin.qq.com/s?__biz=MjM5NDE5OTM4MA==&mid=201383227&idx=1&sn=7707c59e915bbdb7c43ee300e181ed4a#rd"
+		}
+</script>
+</body>
+</html>
