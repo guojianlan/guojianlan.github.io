@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="Copyright" content="GJ"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+   
+    <title>你是哪类白富美？“手”说的算！</title>
+<style>
+body,dl,dd,h1,h2,h3,h4,h5,h6,p,span{margin:0;padding:0px;}
+body{font:12px/1.5 tahoma,simsun,Microsoft YaHei,sans-serif;color:#F9D8D8;-webkit-tap-highlight-color: rgba(0,0,0,0)}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+img{border: none;padding: 0;margin:0;}
+em,i,b{font-style:normal}
+ul,ol,li{list-style:none;margin:0;padding:0;}
+a{text-decoration:none}
+a:hover{text-decoration:none}
+table{border-collapse:collapse;border-spacing:0}
+input,select,option{vertical-align: middle;line-height: normal; border:none; outline:none; list-style:none;}
+.tl{text-align: left;}
+.tc{text-align: center;}
+.fl{float:left;}
+.fr{float:right;}
+.cb{clear: both}
+.bc{margin-left: auto;margin-right: auto}
+.pr{position:relative;}
+.pa{position:absolute;}
+.ovh{overflow:hidden;}
+.db{display:block;}
+.none{display:none;}
+.ht{display:block;overflow:hidden;text-indent:-999em;}
+html,body,.sec{height:100%; background:#fff;}
+.wraper{max-width:640px;height:100%;max-height:1000px; position:relative;margin:0 auto;padding:0;  }
+.wraper img{height:100%;}
+.mask{width:100%; height:100%; background:#32373b;position: absolute; left:0;top: 0;z-index:999; display:none;}
+.mask-box{width: 100%;height: 252px;position: absolute;top: 50%;left:0;margin-top: -119px;}
+.mask-pic{width: 194px;height: 194px;margin: 0 auto;text-align: center;}
+.mask span{font-size:22px;display:block;color:#ffd40a; text-align:center;width: 100%;height: 25px;padding-top: 10px;}
+.mask i{width: 128px;height: 194px;background: url(img/hengping.png) 0 0 no-repeat;background-size: 128px 194px;display: block;margin: 0 auto;-webkit-animation: maskAni 1.5s ease infinite alternate;animation: maskAni 1.5s ease infinite alternate;}
+@-webkit-keyframes maskAni{
+    0% {-webkit-transform:rotate(-90deg);}
+    30% {-webkit-transform:rotate(-90deg);}
+    70%{-webkit-transform:rotate(0deg);}
+    100% {-webkit-transform:rotate(0deg);}
+}
+#main{display:none;}
+.load{text-align: center;  background: #F9D8D8; overflow: hidden; display: block; z-index: 9; height:100%;}
+.loadBg{height:100%;  width: 48px; height:60px;  position: absolute; top:50%; margin-left: -24px; left:50%; margin-top: -30px; font-size:12px; color:#fe9900;}
+.loadGif{background:url(img/loading.gif) no-repeat; background-size: 33px 33px;-webkit-animation: rotate 3s infinite linear; height:33px; width: 33px;}
+.loadBg p{position: relative; left:-5px; top:8px;}
+.top_one{width:100%;height:100%;position:absolute;top:0%; background:url(img/bg_one.fw.jpg) no-repeat bottom ; background-size:auto 100%;z-index:100;display:none;}
+.one_title{color:#333333;font-size:20px; font-weight:bold;width:100%; text-align:center;margin-top:7%;height:6%;}
+.one_shou{ background:url(img/dashou.png) no-repeat center;height:55%; background-size:auto 100%;margin-top:6%;position:relative;}
+.dashou_1{height:15%; width:19%;position:absolute;left:10%;top:49%;}
+.dashou_2{height:25%; width:19%;position:absolute;left:22%;top:12%;}
+.dashou_3{height:25%; width:16%;position:absolute;left:47%;top:2%;}
+.dashou_4{height:25%; width:15%;position:absolute;left:64%;top:10%;}
+.dashou_5{height:25%; width:15%;position:absolute;left:77%;top:30%;}
+.one_ms{font-size:12px;text-align:center;margin-top:7%;height:6%;color:#656565;padding:0 40px;max-width:560px;}
+.top_two{width:100%;height:100%;position:absolute;top:0%;background:#F9D8D8;z-index:90; overflow:hidden;display:none;}
+.two_title{color:#333333;font-size:20px; font-weight:bold;width:100%; text-align:center;margin-top:10%;}
+.two_title_1{color:#656565;font-size:14px;width:100%; text-align:center;}
+.two_title_2{color:#656565;font-size:14px;width:100%; text-align:center;}
+.baohan{height:50%;position:relative;margin-top:10%;}
+.yq{width:100%;height:100%;background:url(img/yq.fw.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;}
+.yd{
+	animation:yidongTop03 4s linear;
+	-moz-animation:yidongTop03 4s linear; /* Firefox */
+	-webkit-animation:yidongTop03 4s linear; /* Safari and Chrome */
+	-o-animation:yidongTop03 4s linear; /* Opera */
+}
+@-moz-keyframes yidongTop03 {
+  0% {
+    -webkit-transform: rotate(0deg)  ;
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(720deg) ;
+    transform: rotate(720deg) ;
+  }
+}
+@-webkit-keyframes yidongTop03 {
+  0% {
+    -webkit-transform: rotate(0deg)  ;
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(720deg) ;
+    transform: rotate(720deg) ;
+  }
+}
+
+.bj{height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;}
+.ydd{
+	animation:yidongTop04 4s linear;
+	-moz-animation:yidongTop04 4s linear; /* Firefox */
+	-webkit-animation:yidongTop04 4s linear; /* Safari and Chrome */
+	-o-animation:yidongTop04 4s linear; /* Opera */
+}
+@-moz-keyframes yidongTop04 {
+  0% {
+	opacity:1;
+   height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  10% {
+	 opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  20% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  30% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  40% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  50% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  60% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  70% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  80% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  90% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  100% {
+	  opacity:1;
+ 	 height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+}
+@-webkit-keyframes yidongTop04 {
+   0% {
+	opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  10% {
+	 opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  20% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  30% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo-1.png) no-repeat center; background-size:auto 97%;
+  }
+  40% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  50% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  60% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  70% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  80% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  90% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  100% {
+	  opacity:1;
+ 	 height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+}
+.zhiyin{width:100%;height:100%;background:url(img/zhiyin.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;}
+.zoujt{width:100%;height:100%;background:url(img/zoujt.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;
+-webkit-animation:f1 1s  infinite  linear forwards alternate ;
+-moz-animation:f1 1s  infinite  linear forwards alternate ;
+}
+.youjt{width:100%;height:100%;background:url(img/youjt.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;
+-webkit-animation:f2 1s  infinite  linear forwards alternate ;
+-moz-animation:f2 1s  infinite  linear forwards alternate ;
+}
+@-webkit-keyframes f1{
+    0%{ transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(20px);-webkit-transform:translateX(20px);}
+}
+@-moz-keyframes f1{
+    0%{transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(20px);-webkit-transform:translateX(20px);}
+} 
+@-webkit-keyframes f2{
+    0%{ transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(-20px);-webkit-transform:translateX(-20px);}
+}
+@-moz-keyframes f2{
+    0%{transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(-20px);-webkit-transform:translateX(-20px);}
+}
+.shou1{width:100%;height:100%;background:url(img/shou_01.png) no-repeat center; background-size:auto 100%;position:absolute;left:10%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou2{width:100%;height:100%;background:url(img/shou_02.png) no-repeat center; background-size:auto 100%;position:absolute;left:5%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou3{width:100%;height:100%;background:url(img/shou_03.png) no-repeat center; background-size:auto 100%;position:absolute;left:0%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou4{width:100%;height:100%;background:url(img/shou_04.png) no-repeat center; background-size:auto 100%;position:absolute;left:0%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou5{width:100%;height:100%;background:url(img/shou_05.png) no-repeat center; background-size:auto 100%;position:absolute;left:-5%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+@-webkit-keyframes shouzhifd{
+    0%{ transform: scale(1);-webkit-transform:scale(1);}
+    10%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+	20%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    30%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    40%{ transform: scale(1);-webkit-transform:scale(1);}
+    50%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    60%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    70%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    80%{ transform: scale(1);-webkit-transform:scale(1);}
+    90%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    100%{transform: scale(1);-webkit-transform:scale(1);}
+}
+@-moz-keyframes shouzhifd{
+    0%{ transform: scale(1);-webkit-transform:scale(1);}
+    10%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+	20%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    30%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    40%{ transform: scale(1);-webkit-transform:scale(1);}
+    50%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    60%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    70%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    80%{ transform: scale(1);-webkit-transform:scale(1);}
+    90%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    100%{transform: scale(1);-webkit-transform:scale(1);}
+}
+.top_three{width:100%;height:100%;position:absolute;top:0%; background:url(img/bg_one.fw.jpg) no-repeat bottom #F9D8D8; background-size:auto 100%;z-index:80;display:none;}
+.three_ph{height:30%;margin-top:15%;background:url(img/wupin.png) no-repeat center ; background-size:auto 100%;}
+.talkbubble {margin:10% 20px 20px;padding:20px;max-width:560px;background: #FFF7F7;position: relative;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;color:#656565;}
+.talkbubble:before {content:"";position:absolute;right:100%;top: 45%;width:0;height: 0;border-top: 8px solid transparent;border-right: 16px solid #FFF7F7;border-bottom: 8px solid transparent; }
+.three_dj{color:#333333;font-size:14px; font-weight:bold;padding:0 40px;}
+.three_dj span{color:#F95757;font-size:16px; font-weight:bold;}
+.three_dj img{width:26px;height:19px;}
+
+.top_four{width:100%;height:100%;position:absolute;top:0%; background:#fff; background-size:auto 100%;z-index:70;display:none;}
+.four_main{margin:10px 22px 0px 22px;max-width:596px;}
+.four_title{color:#333;font-size:14px;}
+.four_nrm{padding:22px; border-radius:5px;border:1px solid #F5D9D9;margin-top:5%;}
+.wbk{background:#FFF6F6;width:60%;height:16px;font-size:14px;border:1px solid #E8E7E7;}
+.shouji{margin-top:5%;color:#333333;font-size:14px;}
+.xingmi{color:#333333;font-size:14px;}
+.tijiao_b{margin:0; text-align:center;margin-top:5%;}
+.tijiao{padding:12px 34px;background:#EB5251;border-radius:5px;width:65px;text-aligh:center; display:inline-block;}
+.gxn{color:#e03456;font-size:14px;margin-top:30px;}
+.lb{font-size:12px;color:#666666;margin-top:20px;}
+.lb li{margin:4px 0px;}
+.sm{margin:10px;font-size:12px;color:#f63d62;}
+.kaiye{color:#e03456;font-size:14px;}
+
+.top_five{width:100%;height:100%;position:absolute;top:0%; background:url(img/bg_one.fw.jpg) no-repeat bottom #F9D8D8; background-size:auto 100%;z-index:80;}
+.five_main{margin:20px;max-width:596px;}
+.five_nrm{padding:20px; border-radius:5px;border:1px solid #F5D9D9;margin-top:20px;background:#fdf3f2;position:relative;}
+#lotteryContainer {
+position:relative;
+width: 220px;
+height:40px;
+left:0;
+}
+#drawPercent {
+color:#F60;
+}
+.five_title{color:#333;margin-top:3%;}
+.five_addresT{color:#E13358; font-weight:bold;margin-top:5%;}
+.five_dz li{color:#333;margin:4px 0px;}
+.five_lq{font-size:12px;color:#666;margin-top:3%;}
+.five_xq{font-size:12px;color:#666;margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="wraper" id="wraper">
+        <!--lodding-->
+		<div class="load">
+            <div class="loadBg">
+                <div class="loadGif"></div>
+                <p>loading...</p>
+            </div>
+        </div>
+        <div id="main">
+        	<!--第一页-->
+            
+           <!--第二页-->
+           
+           <!--第三页-->
+           
+             <!--第四页-->
+            
+             <!--第五页-->
+             <div class="top_five" id="top_five">
+             	<div class="five_main">
+                    <div class="five_nrm">
+                    	<div  id="lotteryContainer"></div>
+                        <div class="five_title">各位白富美，赶紧去ER（永富钻石）的全国门店领取吧~</div>
+                        <div class="five_addresT">全国门店地址</div>
+                        <ul class="five_dz">
+                        	<li>北京：北京朝阳区朝阳公园6号蓝色港湾1号楼2层西侧</li>
+                            <li>上海：上海徐汇区肇家浜路1065甲号飞雕大厦2603室</li>
+                            <li>深圳：深圳南山区海德三道195号天利中央商务广场B座2302室</li>
+                            <li>重庆：重庆渝中区解放碑华园国际2606室</li>
+                        </ul>
+                        <div class="five_lq">你也可以通过<span sytle>发送你的手机号</span>到ER官方微信查询获奖情况<span>（奖品领取，截止11月11日）。</span></div>
+                        <div class="five_xq">具体详情，欢迎拨打全国ER专线：400-6181-951</div>
+                    </div>
+                </div>
+             </div>
+ 	   </div>
+</div>
+<div class="mask flexcontainer" id="mask" style="display:none">
+    <div class="mask-box">
+        <div class="mask-pic"><i></i></div>
+        <span>为了能有更好的体验感觉，请将设备竖过来</span>
+    </div>
+</div>
+
+<script src="Lottery.js"></script>
+<script src="WeixinApi.js"></script>
+<script>
+window.onload = function () {
+	var msg="gongxi";
+	//初始化第一层图片
+	var lottery = new Lottery('lotteryContainer', './img/zhimo_1.png', 'image', 305, 305, drawPercent);
+	//初始化低层图片
+	lottery.init('./img/zhimo.png', 'image'); // 刮奖内容
+	//刮奖挂到多少弹出东西
+	function drawPercent(percent) {
+		if(percent>80){		
+		}
+	}
+}
+function getRandomStr(len) {
+	var text = "";
+	var possible = "1";
+	for( var i=0; i < len; i++ )
+	text += possible.charAt(Math.floor(Math.random() * possible.length));
+	return text;
+}
+WeixinApi.ready(function(Api){
+    // 微信分享的数据
+    var wxData = {
+        "imgUrl":'http://XXXX/img/logo.jpg', //这个是分享icon
+        "link":'http://www.baidu.com',   //这个分享是连接
+        "desc":"内容", //这个分享是内容
+        "title":"标题" //这个分享是标题
+    };
+    
+    var wbData = {
+            "imgUrl":'http://XXXX/img/logo.jpg',
+            "link":'http://www.baidu.com',
+            "desc":"内容",
+            "title":"标题"
+        };
+     
+ 
+    // 分享的回调
+    var wxCallbacks = {
+        // 分享操作开始之前
+        ready:function () {
+            // 你可以在这里对分享的数据进行重组
+           
+        },
+        // 分享被用户自动取消
+        cancel:function (resp) {
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+        },
+        // 分享失败了
+        fail:function (resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+        },
+        // 分享成功
+        confirm:function (resp) {
+            // 分享成功了，我们是不是可以做一些分享统计呢？
+            
+            //window.location="www.baidu.com";
+            
+        },
+        // 整个分享过程结束
+        all:function (resp) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+        }
+    };
+ 
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+ 
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+ 
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wbData, wxCallbacks);
+    // 显示菜单
+    Api.showOptionMenu();
+});
+//WeixinJSBridge.call('showOptionMenu');
+
+</script>
+
+
+<script>
+	
+	var imgPath = "img/";
+	var loadImage = function(path, callback){
+    var img = new Image();
+    img.onload = function(){
+        img.onload = null;
+        callback(path);
+    }
+    img.src = path;
+}
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);  
+     }
+}
+var loadingPage = (function(){
+    var sourceArr = ['bg_one.fw.jpg','dashou.png','hengping.png','loading.gif','yq.fw.png','shou_01.png','shou_02.png','shou_03.png',
+	'shou_04.png','shou_05.png','zhimo.png','zhimo_1.png','zoujt.png','youjt.png','wupin.png'];
+    for (var i = 0; i < sourceArr.length; i++) {
+        sourceArr[i] = (imgPath + sourceArr[i]);
+    };
+    var imgLoader = function(imgs, callback){
+        var len = imgs.length, i = 0;
+        while(imgs.length){
+            loadImage(imgs.shift(), function(path){
+                callback(path, ++i, len);
+            });
+        }
+    }
+    imgLoader(sourceArr, function(path, curNum, total){
+        var percent = curNum/total;
+        if(percent == 1){
+            //loading页隐藏
+            var domLoading = document.querySelector('.load');
+            removeElement(domLoading);
+           document.getElementById("main").style.display = "block";
+        	//setTimeout(gameLoading,500);
+        }
+    });
+})();
+</script>
+<script>	
+	var xztimer=null;
+	function gameLoading(){
+		document.querySelector("#top_one").ontouchmove=function(ev){
+			var ev=ev||window.event;
+			ev.preventDefault();
+
+		}
+		document.querySelector("#top_two").ontouchmove=function(ev){
+			var ev=ev||window.event;
+			ev.preventDefault();
+		}
+		document.querySelector("#top_three").ontouchmove=function(ev){
+			var ev=ev||window.event;
+			ev.preventDefault();
+		}
+
+		document.getElementById("tijiao").ontouchstart=function(){
+			var str = "";
+			if(document.getElementById("xingming").value==""){
+				str+="请输入姓名!\n";
+			}
+			var isPhone = /^0?1[3|4|5|8][0-9]\d{8}$/.test(document.getElementById("shouji").value);
+			var isTell = /^0[\d]{2,3}-[\d]{7,8}$/.test(document.getElementById("shouji").value)
+			if(!(isPhone||isTell)){
+				str+="请输入正确的手机号码!\n";
+			}
+			if(str!=""){
+				alert(str);
+				return;
+			}
+
+			document.querySelector("#top_four").style.display="none";
+			document.querySelector("#top_five").style.display="block";
+		}
+		
+		document.querySelector("#tiaoz").ontouchstart=function(){
+			document.querySelector("#top_three").style.display="none";
+			document.querySelector("#top_four").style.display="block";
+		}
+		document.querySelector("#dashou_1").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou1";
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_2").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou2";
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_3").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou3";
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_4").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou4"
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_5").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou5";
+			//endshouzhi();
+		}
+		document.querySelector("#zhiyin").ontouchstart=function(){
+			xztimer=setTimeout(function(){
+				document.querySelector("#top_two").style.display="none";
+				document.querySelector("#top_three").style.display="block";
+			},3000);
+			document.getElementById("yq").className="yq yd";
+			document.getElementById("bj").className="bj ydd";
+			return false;
+		}
+		document.querySelector("#zhiyin").ontouchend=function(){
+			clearTimeout(xztimer);
+			document.getElementById("yq").className="yq";
+			document.getElementById("bj").className="bj";
+		
+		}
+	}
+	var endTime=null;
+	function endshouzhi(){
+			clearTimeout(endTime);
+			endTime=setTimeout(function(){
+				document.getElementById("shou").className=""
+			},1000)
+	}
+	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", checkDirect, false); 
+	function checkDirect(){
+			if(window.orientation==180||window.orientation==0){  
+				document.querySelector(".mask").style.display ="none";  
+				document.querySelector(".wraper").style.display="block";
+			}  
+			if(window.orientation==90||window.orientation==-90){  
+				 document.querySelector(".mask").style.display ="block";
+				document.querySelector(".wraper").style.display="none";
+			}  
+		}
+</script>
+</body>
+</html>

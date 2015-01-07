@@ -1,0 +1,669 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="Copyright" content="GJ"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+   
+    <title>手指触碰效果</title>
+<style>
+body,dl,dd,h1,h2,h3,h4,h5,h6,p,span{margin:0;padding:0px;}
+body{font:12px/1.5 tahoma,simsun,Microsoft YaHei,sans-serif;color:#F9D8D8;-webkit-tap-highlight-color: rgba(0,0,0,0)}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+img{border: none;padding: 0;margin:0;}
+em,i,b{font-style:normal}
+ul,ol,li{list-style:none;margin:0;padding:0;}
+a{text-decoration:none}
+a:hover{text-decoration:none}
+table{border-collapse:collapse;border-spacing:0}
+input,select,option{vertical-align: middle;line-height: normal; border:none; outline:none; list-style:none;}
+.tl{text-align: left;}
+.tc{text-align: center;}
+.fl{float:left;}
+.fr{float:right;}
+.cb{clear: both}
+.bc{margin-left: auto;margin-right: auto}
+.pr{position:relative;}
+.pa{position:absolute;}
+.ovh{overflow:hidden;}
+.db{display:block;}
+.none{display:none;}
+.ht{display:block;overflow:hidden;text-indent:-999em;}
+html,body,.sec{height:100%; background:#fff;}
+.wraper{max-width:640px;height:100%;max-height:1000px; position:relative;margin:0 auto;padding:0;  }
+.wraper img{height:100%;}
+.mask{width:100%; height:100%; background:#32373b;position: absolute; left:0;top: 0;z-index:999; display:none;}
+.mask-box{width: 100%;height: 252px;position: absolute;top: 50%;left:0;margin-top: -119px;}
+.mask-pic{width: 194px;height: 194px;margin: 0 auto;text-align: center;}
+.mask span{font-size:22px;display:block;color:#ffd40a; text-align:center;width: 100%;height: 25px;padding-top: 10px;}
+.mask i{width: 128px;height: 194px;background: url(img/hengping.png) 0 0 no-repeat;background-size: 128px 194px;display: block;margin: 0 auto;-webkit-animation: maskAni 1.5s ease infinite alternate;animation: maskAni 1.5s ease infinite alternate;}
+@-webkit-keyframes maskAni{
+    0% {-webkit-transform:rotate(-90deg);}
+    30% {-webkit-transform:rotate(-90deg);}
+    70%{-webkit-transform:rotate(0deg);}
+    100% {-webkit-transform:rotate(0deg);}
+}
+#main{display:none;}
+.load{text-align: center;  background: #F9D8D8; overflow: hidden; display: block; z-index: 9; height:100%;}
+.loadBg{height:100%;  width: 48px; height:60px;  position: absolute; top:50%; margin-left: -24px; left:50%; margin-top: -30px; font-size:12px; color:#fe9900;}
+.loadGif{background:url(img/loading.gif) no-repeat; background-size: 33px 33px;-webkit-animation: rotate 3s infinite linear; height:33px; width: 33px;}
+.loadBg p{position: relative; left:-5px; top:8px;}
+.top_one{width:100%;height:100%;position:absolute;top:0%; background:url(img/bg_one.fw.jpg) no-repeat bottom ; background-size:auto 100%;z-index:100;}
+.one_title{color:#333333;font-size:20px; font-weight:bold;width:100%; text-align:center;margin-top:7%;height:6%;}
+.one_shou{ background:url(img/dashou.png) no-repeat center;height:55%; background-size:auto 100%;margin-top:6%;position:relative;}
+.dashou_1{height:15%; width:19%;position:absolute;left:10%;top:49%;}
+.dashou_2{height:25%; width:19%;position:absolute;left:22%;top:12%;}
+.dashou_3{height:25%; width:16%;position:absolute;left:47%;top:2%;}
+.dashou_4{height:25%; width:15%;position:absolute;left:64%;top:10%;}
+.dashou_5{height:25%; width:15%;position:absolute;left:77%;top:30%;}
+.one_ms{font-size:12px;text-align:center;margin-top:7%;height:6%;color:#656565;padding:0 40px;max-width:560px;}
+.top_two{width:100%;height:100%;position:absolute;top:0%;background:#F9D8D8;z-index:90; overflow:hidden;display:none;}
+.two_title{color:#333333;font-size:20px; font-weight:bold;width:100%; text-align:center;margin-top:10%;}
+.two_title_1{color:#656565;font-size:14px;width:100%; text-align:center;}
+.two_title_2{color:#656565;font-size:14px;width:100%; text-align:center;}
+.baohan{height:50%;position:relative;margin-top:10%;}
+.yq{width:100%;height:100%;background:url(img/yq.fw.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;}
+.yd{
+	animation:yidongTop03 4s linear;
+	-moz-animation:yidongTop03 4s linear; /* Firefox */
+	-webkit-animation:yidongTop03 4s linear; /* Safari and Chrome */
+	-o-animation:yidongTop03 4s linear; /* Opera */
+}
+@-moz-keyframes yidongTop03 {
+  0% {
+    -webkit-transform: rotate(0deg)  ;
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(720deg) ;
+    transform: rotate(720deg) ;
+  }
+}
+@-webkit-keyframes yidongTop03 {
+  0% {
+    -webkit-transform: rotate(0deg)  ;
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(720deg) ;
+    transform: rotate(720deg) ;
+  }
+}
+
+.bj{height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;}
+.ydd{
+	animation:yidongTop04 4s linear;
+	-moz-animation:yidongTop04 4s linear; /* Firefox */
+	-webkit-animation:yidongTop04 4s linear; /* Safari and Chrome */
+	-o-animation:yidongTop04 4s linear; /* Opera */
+}
+@-moz-keyframes yidongTop04 {
+  0% {
+	opacity:1;
+   height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  10% {
+	 opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  20% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  30% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  40% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  50% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  60% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  70% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  80% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  90% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  100% {
+	  opacity:1;
+ 	 height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+}
+@-webkit-keyframes yidongTop04 {
+   0% {
+	opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  10% {
+	 opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  20% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  30% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo-1.png) no-repeat center; background-size:auto 97%;
+  }
+  40% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  50% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  60% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  70% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  80% {
+	  opacity:1;
+    height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+  90% {
+	  opacity:0.6;
+    height:100%;background:url(img/zhimo_1.png) no-repeat center; background-size:auto 97%;
+  }
+  100% {
+	  opacity:1;
+ 	 height:100%;background:url(img/zhimo.png) no-repeat center; background-size:auto 100%;
+  }
+}
+.zhiyin{width:100%;height:100%;background:url(img/zhiyin.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;}
+.zoujt{width:100%;height:100%;background:url(img/zoujt.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;
+-webkit-animation:f1 1s  infinite  linear forwards alternate ;
+-moz-animation:f1 1s  infinite  linear forwards alternate ;
+}
+.youjt{width:100%;height:100%;background:url(img/youjt.png) no-repeat center; background-size:auto 100%;position:absolute;left:0;top:0;
+-webkit-animation:f2 1s  infinite  linear forwards alternate ;
+-moz-animation:f2 1s  infinite  linear forwards alternate ;
+}
+@-webkit-keyframes f1{
+    0%{ transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(20px);-webkit-transform:translateX(20px);}
+}
+@-moz-keyframes f1{
+    0%{transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(20px);-webkit-transform:translateX(20px);}
+} 
+@-webkit-keyframes f2{
+    0%{ transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(-20px);-webkit-transform:translateX(-20px);}
+}
+@-moz-keyframes f2{
+    0%{transform:translateX(0px);-webkit-transform:translateX(0px);}
+    100%{transform:translateX(-20px);-webkit-transform:translateX(-20px);}
+}
+.shou1{width:100%;height:100%;background:url(img/shou_01.png) no-repeat center; background-size:auto 100%;position:absolute;left:10%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou2{width:100%;height:100%;background:url(img/shou_02.png) no-repeat center; background-size:auto 100%;position:absolute;left:5%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou3{width:100%;height:100%;background:url(img/shou_03.png) no-repeat center; background-size:auto 100%;position:absolute;left:0%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou4{width:100%;height:100%;background:url(img/shou_04.png) no-repeat center; background-size:auto 100%;position:absolute;left:0%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+.shou5{width:100%;height:100%;background:url(img/shou_05.png) no-repeat center; background-size:auto 100%;position:absolute;left:-5%;top:40%;
+-webkit-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+-moz-animation:shouzhifd 2s  infinite  linear forwards alternate ;
+}
+@-webkit-keyframes shouzhifd{
+    0%{ transform: scale(1);-webkit-transform:scale(1);}
+    10%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+	20%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    30%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    40%{ transform: scale(1);-webkit-transform:scale(1);}
+    50%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    60%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    70%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    80%{ transform: scale(1);-webkit-transform:scale(1);}
+    90%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    100%{transform: scale(1);-webkit-transform:scale(1);}
+}
+@-moz-keyframes shouzhifd{
+    0%{ transform: scale(1);-webkit-transform:scale(1);}
+    10%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+	20%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    30%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    40%{ transform: scale(1);-webkit-transform:scale(1);}
+    50%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    60%{ transform: scale(1.2);-webkit-transform:scale(1.2);}
+    70%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    80%{ transform: scale(1);-webkit-transform:scale(1);}
+    90%{transform: scale(1.1);-webkit-transform:scale(1.1);}
+    100%{transform: scale(1);-webkit-transform:scale(1);}
+}
+.top_three{width:100%;height:100%;position:absolute;top:0%; background:url(img/bg_one.fw.jpg) no-repeat bottom #F9D8D8; background-size:auto 100%;z-index:80;display:none;}
+.three_ph{height:30%;margin-top:15%;background:url(img/wupin.png) no-repeat center ; background-size:auto 100%;}
+.talkbubble {margin:10% 20px 20px;padding:20px;max-width:560px;background: #FFF7F7;position: relative;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;color:#656565;}
+.talkbubble:before {content:"";position:absolute;right:100%;top: 45%;width:0;height: 0;border-top: 8px solid transparent;border-right: 16px solid #FFF7F7;border-bottom: 8px solid transparent; }
+.three_dj{color:#333333;font-size:14px; font-weight:bold;padding:0 40px;}
+.three_dj span{color:#F95757;font-size:16px; font-weight:bold;}
+.three_dj img{width:26px;height:19px;}
+
+.top_four{width:100%;height:100%;position:absolute;top:0%; background:#fff; background-size:auto 100%;z-index:70;display:none;}
+.four_main{margin:10px 22px 0px 22px;max-width:596px;}
+.four_title{color:#333;font-size:14px;}
+.four_nrm{padding:22px; border-radius:5px;border:1px solid #F5D9D9;margin-top:5%;}
+.wbk{background:#FFF6F6;width:60%;height:16px;font-size:14px;border:1px solid #E8E7E7;}
+.shouji{margin-top:5%;color:#333333;font-size:14px;}
+.xingmi{color:#333333;font-size:14px;}
+.tijiao_b{margin:0; text-align:center;margin-top:5%;}
+.tijiao{padding:12px 34px;background:#EB5251;border-radius:5px;width:65px;text-aligh:center; display:inline-block;}
+.gxn{color:#e03456;font-size:14px;margin-top:30px;}
+.lb{font-size:12px;color:#666666;margin-top:20px;}
+.lb li{margin:4px 0px;}
+.sm{margin:10px;font-size:12px;color:#f63d62;}
+.kaiye{color:#e03456;font-size:14px;}
+
+.top_five{width:100%;height:100%;position:absolute;top:0%; background:url(img/bg_one.fw.jpg) no-repeat bottom #F9D8D8; background-size:auto 100%;z-index:80;display:none;}
+.five_main{margin:20px;max-width:596px;}
+.five_nrm{padding:20px; border-radius:5px;border:1px solid #F5D9D9;margin-top:20px;background:#fdf3f2;position:relative;}
+.luck{width: 220px;height:40px;left:0;line-height:40px; cursor:pointer; font-size:28px; letter-spacing:25px; text-align:center; color:#000;position:absolute; left:0px;top:0px;}
+.myCanvas{width:220px; height:40px; cursor:pointer; position:absolute;  }
+.gjheader{position:relative;height:40px;left:0;top:0px;}
+#lotteryContainer {
+position:relative;
+width: 220px;
+height:40px;
+left:0;
+}
+#drawPercent {
+color:#F60;
+}
+.five_title{color:#333;margin-top:3%;}
+.five_addresT{color:#E13358; font-weight:bold;margin-top:5%;}
+.five_dz li{color:#333;margin:4px 0px;}
+.five_lq{font-size:12px;color:#666;margin-top:3%;}
+.five_xq{font-size:12px;color:#666;margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="wraper" id="wraper">
+        <!--lodding-->
+		<div class="load">
+            <div class="loadBg">
+                <div class="loadGif"></div>
+                <p>loading...</p>
+            </div>
+        </div>
+        <div id="main">
+        	<!--第一页-->
+            <div class="top_one" id="top_one">
+                <div class="one_title">你是哪类白富美？"手"说的算！</div>
+                <div class="one_shou" >
+                        <div class="dashou_1" id="dashou_1"></div>
+                        <div class="dashou_2" id="dashou_2"></div>
+                        <div class="dashou_3" id="dashou_3"></div>
+                        <div class="dashou_4" id="dashou_4"></div>
+                        <div class="dashou_5" id="dashou_5"></div>
+                </div>
+                <div class="one_ms">点击上面这只<span style="color:#BF2F2F">"手"</span>,图片放大后请按照提示按上对应的手指， 立刻知道你是哪种白富美！</div>
+            </div>
+           <!--第二页-->
+            <div class="top_two" id="top_two">
+            	  <div class="two_title">基因测试你是哪种白富美</div>
+                  <div class="two_title_1">请把你的拇指对准中心圆圈</div>
+                   <div class="two_title_2">扫描开始...</div>
+                   <div class="baohan">
+                       <div class="yq" id="yq"></div><!--  yd-->
+                       <div class="bj" id="bj"></div> <!-- ydd-->
+                       <div class="zoujt"></div>
+                       <div class="youjt"></div>
+                       <div class="zhiyin" id="zhiyin"></div>
+                       <div  id="shou" ></div>
+                   </div>
+            </div>
+           <!--第三页-->
+            <div class="top_three" id="top_three">
+            	<div class="three_ph"></div>
+                <div class="talkbubble">哇塞，你是“大家闺秀”型白富美，这款1.2克拉的碧玺戒指将您 “知书达理,喜行不言色”的大家闺秀气质衬托得淋漓尽致。</div>
+                <div class="three_dj" id="tiaoz">想知道是否有机会得到这颗钻戒么？<span>赶紧，试试手气！</span><img src="img/xiaoshou.png"></div>
+            </div>
+             <!--第四页-->
+             <div class="top_four" id="top_four">
+                 <div class="four_main">
+                    <div class="four_title">Ps:请填写正确手机号码，以免耽误您兑奖。</div>
+                    <div class="four_nrm">
+                    	<div class="xingmi">姓名：<input type="text" class="wbk" id="xingming"></div>
+                        <div class="shouji">手机：<input type="text" class="wbk" id="shouji"></div>
+                        <div class="tijiao_b">
+                            <div class="tijiao" id="tijiao">确认提交</div>
+                        </div>
+                    </div>
+                    <div class="gxn">恭喜你，已经得到一次兑奖机会（100%中奖）！</div>
+                    <ul class="lb">
+                    	<li><span style="color:#fb6363">●&nbsp;&nbsp;</span>“白富美”进店好礼：电影票1套（2张），共1000份。</li>
+                        <li><span style="color:#fb6363">●&nbsp;&nbsp;</span>“白富美”特级好礼：健身体验卡50张\ER自有礼品500份。 </li>
+                        <li><span style="color:#fb6363">●&nbsp;&nbsp;</span>“白富美”顶级好礼：瑞士干细胞体验卷。</li>
+                    </ul>
+                    <div class="sm">(以上奖品，仅限北京、上海、深圳、重庆区域，10月均有效。)</div>
+                    <div class="kaiye">为了庆祝北京蓝色港湾新店开业，所有进店的“白富美”均可以得到一份“白富美”意外大礼包1份。 </div>
+                 </div>
+             </div>
+             <!--第五页-->
+             <div class="top_five" id="top_five">
+             	<div class="five_main">
+                    <div class="five_nrm">
+                    	<div class="gjheader" id="gjheader">
+                             <div class="luck">谢谢参与</div>
+                             <canvas id="myCanvas" class="myCanvas" width="220" height="40">
+                                 your browser does not support the canvas element
+                            </canvas>
+                        </div>
+                        <div class="five_title">各位白富美，赶紧去ER（永富钻石）的全国门店领取吧~</div>
+                        <div class="five_addresT">全国门店地址</div>
+                        <ul class="five_dz">
+                        	<li>北京：北京朝阳区朝阳公园6号蓝色港湾1号楼2层西侧</li>
+                            <li>上海：上海徐汇区肇家浜路1065甲号飞雕大厦2603室</li>
+                            <li>深圳：深圳南山区海德三道195号天利中央商务广场B座2302室</li>
+                            <li>重庆：重庆渝中区解放碑华园国际2606室</li>
+                        </ul>
+                        <div class="five_lq">你也可以通过<span sytle>发送你的手机号</span>到ER官方微信查询获奖情况<span>（奖品领取，截止11月11日）。</span></div>
+                        <div class="five_xq">具体详情，欢迎拨打全国ER专线：400-6181-951</div>
+                    </div>
+                </div>
+             </div>
+ 	   </div>
+</div>
+<div class="mask flexcontainer" id="mask" style="display:none">
+    <div class="mask-box">
+        <div class="mask-pic"><i></i></div>
+        <span>为了能有更好的体验感觉，请将设备竖过来</span>
+    </div>
+</div>
+<script src="jquery-1.4.1.min.js"></script>
+
+<script type="text/javascript">
+	var hasTouch = 'ontouchstart' in window;
+	var canvas;
+	var ctx;
+	var color = "#fff";
+	var lines = [];
+	var points = [];
+	$(document).ready(function () {
+	    var offset = $("#myCanvas").offset();
+	    var canvas_left =window.innerWidth>640?((window.innerWidth-640)/2+40):40;
+	    var canvas_top = 40;
+		
+	    canvas = document.getElementById('myCanvas');
+	    ctx = canvas.getContext('2d');
+	    ctx.fillStyle = "#f00";
+	    ctx.fillRect(0, 0, 220	, 40);
+	    //移动
+	    var START_EV = hasTouch ? 'touchstart' : 'mousedown';
+	    var MOVE_EV = hasTouch ? 'touchmove' : 'mousemove';
+	    var END_EV = hasTouch ? 'touchend' : 'mouseup';
+	    document.getElementById("myCanvas").addEventListener(START_EV, touchCheck, false);
+	    document.getElementById("myCanvas").addEventListener(MOVE_EV, touchCheck, false);
+	    document.getElementById("myCanvas").addEventListener(END_EV, touchCheck, false);
+	    var startTouch;
+	    var isDrag = false;
+	    var lastPoint;
+	    function touchCheck(evt) {
+	        evt.preventDefault();
+	        var touchX;
+	        var touchY;
+	        if (hasTouch) {
+	            if (evt.touches.length > 0) {
+	                touchX = evt.touches[0].pageX - canvas_left;
+	                touchY = evt.touches[0].pageY - canvas_top;
+	            }
+	            else {
+	                if (lastPoint) {
+	                    touchX = lastPoint.x;
+	                    touchY = lastPoint.y;
+	                }
+	            }
+	        }
+	        else {
+	            touchX = evt.pageX - canvas_left;
+	            touchY = evt.pageY - canvas_top;
+	        }
+	        
+	        switch (evt.type) {
+	            case START_EV:
+	                DrawLine();
+	                points = [];
+	                points.push({ x: touchX, y: touchY });
+	                isDrag = true;
+	                lastPoint = { x: touchX, y: touchY };
+	                break;
+	            case MOVE_EV:
+	                if (isDrag) {
+	                    points.push({ x: touchX, y: touchY });
+	                    lastPoint = { x: touchX, y: touchY };
+	                    DrawLine();
+	                }
+	                break;
+	            case END_EV:
+	                isDrag = false;
+	                if (points.length > 0) {
+	                    points.push({ x: touchX, y: touchY });
+	                    lines.push(points);
+	                    DrawLine();
+	                }
+	                break;
+	        }
+	    }
+	    function DrawSingleLine(ctx, line) {
+	        for (var j = 0; j < line.length; j++) {
+	            var point = line[j];
+	            if (j == 0)
+	                ctx.moveTo(point.x, point.y);
+	            else
+	                ctx.lineTo(point.x, point.y);
+	        }
+	    }
+	    function DrawLine() {
+	        ctx.clearRect(0, 0, 220, 40);
+	        ctx.globalCompositeOperation = "source-over";
+	        ctx.fillStyle = "#999";
+	        /*
+	        var img = new Image();
+	        img.src = "images/luck.png";
+	        ctx.drawImage(img, 0, 0);*/
+	        ctx.fillRect(0, 0, 220, 40);
+	        ctx.globalCompositeOperation = "destination-out";
+	        ctx.beginPath();
+	        ctx.strokeStyle = color;
+	        ctx.lineWidth = 20;
+	        var tempLines = lines;
+	        if (tempLines.length == 0) {
+	            tempLines.push(points);
+	        }
+	        for (var i = 0; i < tempLines.length; i++) {
+	            var line = tempLines[i];
+	            DrawSingleLine(ctx, line);
+	        }
+	        if (isDrag && points.length > 0)
+	            DrawSingleLine(ctx, points);
+	        ctx.stroke();
+	        ctx.closePath();
+	    }
+	});
+	function lotterySubmit() {
+		  // var openid = $("#openid").val();
+		   alert(1);
+		  // var url="../lotteryUser/registLottery?openid="+openid;
+	       //window.location.href=url;
+	}
+</script>
+
+<script>
+	
+	var imgPath = "img/";
+	var loadImage = function(path, callback){
+    var img = new Image();
+    img.onload = function(){
+        img.onload = null;
+        callback(path);
+    }
+    img.src = path;
+}
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);  
+     }
+}
+var loadingPage = (function(){
+    var sourceArr = ['bg_one.fw.jpg','dashou.png','hengping.png','loading.gif','yq.fw.png','shou_01.png','shou_02.png','shou_03.png',
+	'shou_04.png','shou_05.png','zhimo.png','zhimo_1.png','zoujt.png','youjt.png','wupin.png'];
+    for (var i = 0; i < sourceArr.length; i++) {
+        sourceArr[i] = (imgPath + sourceArr[i]);
+    };
+    var imgLoader = function(imgs, callback){
+        var len = imgs.length, i = 0;
+        while(imgs.length){
+            loadImage(imgs.shift(), function(path){
+                callback(path, ++i, len);
+            });
+        }
+    }
+    imgLoader(sourceArr, function(path, curNum, total){
+        var percent = curNum/total;
+        if(percent == 1){
+            //loading页隐藏
+            var domLoading = document.querySelector('.load');
+            removeElement(domLoading);
+           document.getElementById("main").style.display = "block";
+        	setTimeout(gameLoading,500);
+        }
+    });
+})();
+</script>
+<script>	
+	var xztimer=null;
+	function gameLoading(){
+		document.querySelector("#top_one").ontouchmove=function(ev){
+			var ev=ev||window.event;
+			ev.preventDefault();
+
+		}
+		document.querySelector("#top_two").ontouchmove=function(ev){
+			var ev=ev||window.event;
+			ev.preventDefault();
+		}
+		//document.querySelector("#top_three").ontouchmove=function(ev){
+			//var ev=ev||window.event;
+		//	ev.preventDefault();
+	//	}
+
+		document.getElementById("tijiao").ontouchstart=function(){
+			var str = "";
+			if(document.getElementById("xingming").value==""){
+				str+="请输入姓名!\n";
+			}
+			var isPhone = /^0?1[3|4|5|8][0-9]\d{8}$/.test(document.getElementById("shouji").value);
+			var isTell = /^0[\d]{2,3}-[\d]{7,8}$/.test(document.getElementById("shouji").value)
+			if(!(isPhone||isTell)){
+				str+="请输入正确的手机号码!\n";
+			}
+			if(str!=""){
+				alert(str);
+				return;
+			}
+
+			document.querySelector("#top_four").style.display="none";
+			document.querySelector("#top_five").style.display="block";
+		}
+		
+		document.querySelector("#tiaoz").ontouchstart=function(){
+			document.querySelector("#top_three").style.display="none";
+			document.querySelector("#top_four").style.display="block";
+		}
+		document.querySelector("#dashou_1").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou1";
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_2").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou2";
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_3").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou3";
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_4").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou4"
+			//endshouzhi();
+		}
+		document.querySelector("#dashou_5").ontouchstart=function(){
+			document.querySelector("#top_one").style.display="none";
+			document.querySelector("#top_two").style.display="block";
+			document.getElementById("shou").className="shou5";
+			//endshouzhi();
+		}
+		document.querySelector("#zhiyin").ontouchstart=function(){
+			xztimer=setTimeout(function(){
+				document.querySelector("#top_two").style.display="none";
+				document.querySelector("#top_three").style.display="block";
+			},3000);
+			document.getElementById("yq").className="yq yd";
+			document.getElementById("bj").className="bj ydd";
+			return false;
+		}
+		document.querySelector("#zhiyin").ontouchend=function(){
+			clearTimeout(xztimer);
+			document.getElementById("yq").className="yq";
+			document.getElementById("bj").className="bj";
+		
+		}
+	}
+	var endTime=null;
+	function endshouzhi(){
+			clearTimeout(endTime);
+			endTime=setTimeout(function(){
+				document.getElementById("shou").className=""
+			},1000)
+	}
+	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", checkDirect, false); 
+	function checkDirect(){
+			if(window.orientation==180||window.orientation==0){  
+				document.querySelector(".mask").style.display ="none";  
+				document.querySelector(".wraper").style.display="block";
+			}  
+			if(window.orientation==90||window.orientation==-90){  
+				 document.querySelector(".mask").style.display ="block";
+				document.querySelector(".wraper").style.display="none";
+			}  
+		}
+</script>
+</body>
+</html>
