@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>重力感应</title>
+</head>
+
+<body>
+
+
+<img src="images/dongtai.jpg" id="imgLogo" alt=""> 
+<p id="moCalcTiltLR"></p> 
+<p id="moCalcTiltFB"></p> 
+
+<script> 
+function deviceMotionHandler(eventData) { 
+    // 
+  var acceleration = eventData.accelerationIncludingGravity; 
+  var facingUp = -1; 
+  if (acceleration.z > 0) { 
+    facingUp = +0; 
+  }      
+  var tiltLR = Math.round(((acceleration.x) / 9.81) * -90); 
+  var tiltFB = Math.round(((acceleration.y + 9.81) / 9.81) * 90 * facingUp);
+
+  document.getElementById("moCalcTiltLR").innerHTML = tiltLR; 
+  document.getElementById("moCalcTiltFB").innerHTML = tiltFB; 
+  var rotation = "rotate(" + -tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB) + "deg)"; 
+  document.getElementById("imgLogo").style.webkitTransform = rotation;        
+} 
+// 
+if (window.DeviceMotionEvent) { 
+window.addEventListener('devicemotion',deviceMotionHandler, false); 
+}else{ 
+    alert('亲，你的浏览器不支持DeviceMotionEvent哦~'); 
+} 
+</script>
+</body>
+</html>
