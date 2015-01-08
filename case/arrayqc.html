@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<div>
+<pre>
+Array.prototype.unique1=function(){
+    var res=[];
+    var json={};
+    for(var i=0,len=this.length;i&lt;len;i++){  
+            判断里面是否已经设置json[this[i]]=1;如果设置了就跳过！
+            if(!json[this[i]]){
+                res.push(this[i]);
+                json[this[i]]=1;
+            }
+    }
+    return res;
+}
+</pre>
+<pre>
+Array.prototype.unique2 = function(){
+	this.sort();
+    先排序，如果相同元素肯定在旁边，使用当前元素和最新的元素对比，不相同则加入数组，弊端是改变了数组顺序
+	var re = [this[0]];
+	for(var i=1,len=this.length;i&lt;len;i++){
+		if(this[i]!=re[re.length-1]){
+			re.push(this[i]);
+		}
+	}
+	return re;
+}
+</pre>
+</div>
+</body>
+</html>
