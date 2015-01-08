@@ -23,20 +23,5 @@
 			<div><a href='case/arrayqc.html'>数组去重</a></div>
     </body>
     <script>
-   
-
-
-Array.prototype.unique3=function(){
-	this.sort();
-	var re = [this[0]];
-	for(var i=1,len=this.length;i<len;i++){
-		if(this[i]!=re[re.length-1]){
-			re.push(this[i]);
-		}
-	}
-	return re;
-}
-var arr = [112,34,55,112];
-alert(arr.unique3());
     </script>
 </html>
