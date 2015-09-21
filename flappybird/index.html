@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>youxi</title>
+    <style>
+        body{padding:0;margin:0;}
+        #container canvas{margin:0 auto;}
+    </style>
+    <script src="js/phaser.min.js"></script>
+    <script src="js/boot.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/play.js"></script>
+</head>
+<body>
+<div id="container">
+
+</div>
+<script>
+    var game = new Phaser.Game(288,505,Phaser.AUTO,'container');
+    //添加场景
+    game.state.add('boot',bootState);
+    game.state.add('loader',loaderState);
+    game.state.add('menu',menuState);
+    game.state.add('play',playState);
+    game.state.start('boot');
+</script>
+</body>
+</html>
