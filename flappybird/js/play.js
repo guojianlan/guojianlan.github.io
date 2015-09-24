@@ -11,7 +11,7 @@ var playState = {
         this.bird.anchor={x:0.5,y:0.5};
         game.physics.enable(this.bird,Phaser.Physics.ARCADE); //开启鸟的物理系统
         this.bird.body.gravity.y = 0; //给鸟设一个重力,开始为0
-        game.physics.enable(this.ground,Phaser.Physics.ARCADE); //开启鸟的物理系统
+        game.physics.enable(this.ground,Phaser.Physics.ARCADE); //开启地面的物理系统
         this.ground.body.immovable = true; //让地面在物理环境中固定不动
         this.readyText = game.add.image(game.width/2,40,'ready_text');
         this.readyText.anchor={x:0.5,y:0};
