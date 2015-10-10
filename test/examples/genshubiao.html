@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('key1','../assets/platform.png');
+        },
+        create:function(){
+            //开启物理引擎
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.sprite = game.add.sprite(game.world.centerX,game.world.centerY,'key1');
+            this.sprite.anchor.setTo(0.5,0.5);
+            //开启物体可以点击
+            this.sprite.inputEnabled=true;
+            this.sprite.events.onInputDown.add(this.lister,this,this.sprite);
+            //开启物体的物理环境
+           game.physics.arcade.enable(this.sprite);
+            //物理速度沿X
+//            this.sprite.body.velocity.x=150;
+        },
+        lister:function(img){
+            img.destroy();
+            console.log(1);
+        },
+        update:function(){
+            //物体和鼠标离开8像素
+            if(game.physics.arcade.distanceToPointer(this.sprite,game.input.activePointer)>8){
+//                300毫秒移动到鼠标的地方
+                game.physics.arcade.moveToPointer(this.sprite, 300);
+            }else{
+                this.sprite.body.velocity.set(0);
+            }
+        },
+        render:function(){
+            game.debug.inputInfo(32,32);
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

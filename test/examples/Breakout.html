@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>breakout</title>
+    <script src="../js/phaser.min.js"></script>
+</head>
+<body>
+    <div class="container"></div>
+    <script>
+        var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+        var loaderState = {
+            preload:function(){
+                //首先加载内容
+                game.load.atlas('breakout','../assets/games/breakout/breakout.png','../assets/games/breakout/breakout.json');
+                game.load.image('starfield','../assets/misc/starfield.jpg');
+            },
+            create:function(){
+                this.ballOnPaddle = true;
+                //开启整个物理环境
+                game.physics.startSystem(Phaser.Physics.ARCADE);
+                //检测所有的世界范围碰撞，除了底部的哪一个
+                game.physics.arcade.checkCollision.down=false;
+                this.gamespeed = 70;
+                this.level = 1;
+                this.paixu = 1;
+                //创建瓦片精灵
+                this.s = game.add.tileSprite(0,0,800,600,'starfield');
+                //创建瓷砖组
+                this.bricks = game.add.group();
+                this.lives = 3;
+                this.score = 0;
+                //设置身体
+                this.bricks.enableBody = true;
+                //这个物体的物理系统类型
+                this.bricks.physicsBodyType = Phaser.Physics.ARCADE;
+
+                //创建每个瓷砖
+                this.newBricks();
+                this.gunzi = game.add.sprite(game.world.centerX,500,'breakout','paddle_big.png');
+                this.gunzi.anchor.setTo(0.5,0.5);
+                //开启棍子的物理环境
+                game.physics.enable(this.gunzi,Phaser.Physics.ARCADE);
+                //设置棍子的碰撞世界的范围
+                this.gunzi.body.collideWorldBounds = true;
+                //设置反弹系数
+                //this.gunzi.body.bounce.set(1);
+                this.gunzi.body.immovable=true;
+                //设置弹球
+                this.ball = game.add.sprite(game.world.centerX,this.gunzi.y-17,'breakout','ball_1.png');
+                //设置球的点
+                this.ball.anchor.set(0.5);
+                //球设置和世界的
+                this.ball.checkWorldBounds = true;
+                //开启球的物理系统
+                game.physics.enable(this.ball,Phaser.Physics.ARCADE);
+                //设置球和世界碰撞范围
+                this.ball.body.collideWorldBounds = true;
+                //设置反弹系数
+                this.ball.body.bounce.set(1);
+
+                this.ball.animations.add('spin',['ball_1.png','ball_2.png','ball_3.png','ball_4.png','ball_5.png'],50,true,false);
+                this.livesText = game.add.text(680,550,'lives: 3',{font:'20px Arial',fill:'#ffffff',align:'left'});
+                this.scoreText = game.add.text(100,550,'score: 0',{font:'20px Arial',fill:'#ffffff',align:'left'});
+                this.introText = game.add.text(game.world.centerX,400,'-level 1-',{font:'40px Arial',fill:'#ffffff',align:'center'});
+                this.introText.anchor.set(0.5,0.5);
+                this.ball.events.onOutOfBounds.add(this.ballLost,this);
+                game.input.onDown.add(this.releaseBall,this);
+
+            },
+            update:function(){
+                this.gunzi.x = game.input.x;
+                if(this.gunzi.x<24){
+                    this.gunzi.x = 24;
+                }else if(this.gunzi.x>game.width-24){
+                    this.gunzi.x = game.width-24;
+                }
+                if(this.ballOnPaddle){
+                       this.ball.x = this.gunzi.x;
+                }else{
+                    game.physics.arcade.collide(this.ball,this.gunzi,this.ballHitgunzi,null,this);
+                    game.physics.arcade.collide(this.ball,this.bricks,this.ballHitBricks,null,this);
+                }
+            },
+            ballLost:function(){
+                var live = --this.lives;
+                this.livesText.text='lives: '+live;
+                if (live === 0)
+                {
+                    this.gameOver();
+                }
+                else
+                {
+                    this.ballOnPaddle = true;
+                    this.ball.reset(this.gunzi.body.x + 16, this.gunzi.y - 16);
+                    this.ball.animations.stop();
+                }
+            },
+            gameOver:function(){
+                this.introText.text = 'Game Over';
+                this.introText.visible=true;
+                this.ball.body.velocity.setTo(0, 0);
+            },
+            ballHitBricks:function(ball,brick){
+                brick.kill();
+                var score = this.score+=10;
+                this.scoreText.text='score: '+score;
+                if (this.bricks.countLiving() == 0)
+                {
+                    score += 1000;
+                    this.paixu++;
+                    this.scoreText.text = 'score: ' + score;
+                    this.introText.text = '- level '+(++this.level)+'-';
+                    this.introText.visible=true;
+                    //  Let's move the ball back to the paddle
+                    this.ballOnPaddle = true;
+                    this.ball.body.velocity.set(0);
+                    this.ball.x = this.gunzi.x + 16;
+                    this.ball.y = this.gunzi.y - 16;
+                    this.ball.animations.stop();
+                    //  And bring the bricks back from the dead :)
+                    this.gamespeed+=70;
+                    //this.bricks.callAll('revive');
+                    this.newBricks();
+                }
+            },
+            newBricks:function(){
+                for(var y=0;y<this.paixu;y++){
+                    for(var x = 0;x<15;x++){
+                        var brick = this.bricks.create(120 + (x * 36), 100 + (y * 52),'breakout','brick_'+(y+1)+'_1.png');
+                        //设置反弹系数
+                        brick.body.bounce.set(1);
+                        //immovable是不动得意思
+                        brick.body.immovable=true;
+                    }
+                }
+            },
+            ballHitgunzi:function(ball,gunzi){
+                //设置球和棍子的反弹
+                var diff = 0;
+                if(ball.x<gunzi.x){
+                    diff = gunzi.x- ball.x;
+                    ball.body.velocity.x = (-10 * diff);
+                }else if(ball.x>gunzi.x){
+                    diff = ball.x -gunzi.x;
+                    ball.body.velocity.x = (10 * diff);
+                }else{
+                    ball.body.velocity.x = 2 + Math.random() * 8;
+                }
+            },
+            releaseBall:function(){
+               if(this.ballOnPaddle){
+                   this.ballOnPaddle = false;
+                   this.ball.body.velocity.y=-300;
+                   this.ball.body.velocity.x=-this.gamespeed;
+                   this.ball.animations.play('spin');
+                   this.introText.visible = false;
+               }
+
+            }
+        };
+        game.state.add('loader',loaderState);
+        game.state.start('loader');
+    </script>
+</body>
+</html>
