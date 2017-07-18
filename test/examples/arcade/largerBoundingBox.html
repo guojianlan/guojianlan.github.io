@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('atari', '../../assets/sprites/atari130xe.png');
+            game.load.image('mushroom', '../../assets/sprites/mushroom2.png');
+
+        },
+        create:function(){
+            game.stage.backgroundColor="#2d2d2d";
+            this.atari = game.add.sprite(130,200,'atari');
+            this.atari.name='atari1';
+            this.mushroom=game.add.sprite(700,210,'mushroom');
+            this.mushroom.name='mushroom1';
+            game.physics.arcade.enable([this.atari,this.mushroom],Phaser.Physics.ARCADE);
+            //设置物体的大小
+            this.atari.body.setSize(100,50,-100,30);
+            //设置物体静止
+            this.atari.body.immovable=true;
+            //给物体提供速度
+            this.mushroom.body.velocity.x=-100;
+
+        },
+        update:function(){
+            game.physics.arcade.collide(this.atari,this.mushroom,this.collideHandle,null,this);
+        },
+        collideHandle:function(obj1,obj2){
+            game.stage.backgroundColor="#229ad6";
+            obj2.kill();
+        },
+        render:function(){
+            game.debug.body(this.atari);
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

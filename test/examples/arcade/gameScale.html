@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('gameboy', '../../assets/sprites/gameboy_seize_color_40x60.png',40,60);
+
+        },
+        create:function(){
+
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.stage.backgroundColor='#666666';
+            this.sprite = game.add.sprite(200,300,'gameboy',2);
+            this.sprite.anchor.set(0.5);
+            this.sprite.smoothed = false;
+            game.physics.enable(this.sprite,Phaser.Physics.ARCADE);
+            this.sprite.body.immovable= true;
+            this.sprite.body.collideWorldBounds = true;
+            this.sprite.body.bounce.y=0.9;
+            this.sprite2 = game.add.sprite(600,270,'gameboy',3);
+            game.physics.enable(this.sprite2,Phaser.Physics.ARCADE);
+            game.add.tween(this.sprite.scale).to({x:3,y:3},2000,Phaser.Easing.Linear.None,true,0,1000,true);
+        },
+        update:function(){
+            this.sprite2.body.velocity.x=-200;
+            game.physics.arcade.collide(this.sprite,this.sprite2);
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('dude','../../assets/games/starstruck/dude.png',32,48);
+            game.load.image('background','../../assets/games/starstruck/background2.png')
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.facing = 'left';
+            this.jumpTimer = 0;
+            game.time.desiredFps = 30;
+            game.world.setBounds(0,0,1600,600);
+            this.bg = game.add.tileSprite(0,0,1600,600,'background');
+            this.dude= game.add.sprite(200,200,'dude');
+            this.dude.animations.add('left',[0,1,2,3],10,true);
+            this.dude.animations.add('rutn',[4],true);
+            this.dude.animations.add('right',[5,6,7,8],10,true);
+            game.physics.arcade.enable(this.dude,Phaser.Physics.ARCADE);
+            game.physics.arcade.gravity.y=200;
+            this.dude.body.collideWorldBounds=true;
+            this.dude.body.bounce.set(0.2);
+            this.cursors = game.input.keyboard.createCursorKeys();
+            this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            game.camera.follow(this.dude,Phaser.Camera.FOLLOW_TOPDOWN);
+        },
+        update:function(){
+            this.dude.body.velocity.x=0;
+            if(this.cursors.left.isDown){
+                this.dude.body.velocity.x=-150;
+                if(this.facing!='left'){
+                    this.dude.animations.play('left',20);
+                    this.facing='left';
+                }
+
+            }else if(this.cursors.right.isDown){
+                this.dude.body.velocity.x=150;
+                if(this.facing!='right'){
+                    this.dude.animations.play('right',20);
+                    this.facing='right';
+                }
+            }else{
+                if(this.facing!='idle'){
+                    this.dude.animations.stop();
+                    if(this.facing=='left'){
+                        this.dude.frame=4;
+                    }else{
+                        this.dude.frame=4;
+                    }
+                    this.facing='idle';
+                }
+            }
+            // this.dude.body.onFloor()到底部
+            if(this.jumpButton.isDown && this.dude.body.onFloor() && game.time.now>this.jumpTimer){
+                this.dude.body.velocity.y=-250;
+                this.jumpTimer =game.time.now+700;
+            }
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

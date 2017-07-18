@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            //物体移动开关
+            this.catchFlag = false;
+            //是否已经射出
+            this.launched=null;
+            game.load.image('background', '../../assets/misc/starfield.jpg');
+            game.load.image('dude', '../../assets/sprites/phaser-dude.png');
+            game.load.image('analog', '../../assets/tests/fusia.png');
+            game.load.image('arrow', '../../assets/sprites/longarrow2.png');
+
+        },
+        create:function(){
+            //设计游戏世界大小
+            game.world.setBounds(0,0,3400,1000);
+            //添加瓦片到整个屏幕
+            game.add.tileSprite(0,0,3400,1000,'background');
+            this.dude = game.add.sprite(100,100,'dude');
+            game.physics.arcade.enable(this.dude,Phaser.Physics.ARCADE);
+            game.physics.arcade.gravity.y=0;
+            game.camera.follow(this.dude, Phaser.Camera.FOLLOW_TOPDOWN);
+            this.dude.body.collideWorldBounds=true;
+            this.dude.body.bounce.set(0.9);
+            this.analog = game.add.sprite(300,300,'analog');
+            this.analog.width=8;
+            this.analog.rotation=220;
+            this.analog.anchor.setTo(0.5,0);
+            this.analog.alpha=0;
+
+            this.arrow = game.add.sprite(300,300,'arrow');
+            this.arrow.anchor.setTo(0.1,0.5);
+            this.arrow.alpha=0;
+            this.dude.anchor.set(0.5);
+
+            this.dude.body.drag.set(0,0);
+            this.dude.inputEnabled= true;
+            this.dude.input.start(0,true);
+            this.dude.events.onInputDown.add(this.setDude,this);
+            this.dude.events.onInputUp.add(this.lauchor,this);
+
+        },
+        update:function(){
+            this.arrow.rotation = game.physics.arcade.angleBetween(this.arrow,this.dude);
+            if(this.catchFlag){
+                this.dude.x=game.input.activePointer.worldX;
+                this.dude.y=game.input.activePointer.worldY;
+                this.analog.rotation = this.arrow.rotation-3.14/2;
+                this.arrow.alpha=1;
+                this.analog.alpha=0.5;
+                this.analog.height=game.physics.arcade.distanceBetween(this.arrow,this.dude);
+            }
+        },
+        setDude:function(){
+            this.catchFlag=true;
+            game.camera.follow(null);
+            this.dude.body.moves = false;
+            this.dude.body.velocity.set(0,0);
+            this.arrow.reset(this.dude.x,this.dude.y);
+            this.analog.reset(this.dude.x,this.dude.y);
+        },
+        lauchor:function(){
+            this.catchFlag=false;
+            this.dude.body.moves = true;
+            game.camera.follow(this.dude, Phaser.Camera.FOLLOW_TOPDOWN);
+            this.arrow.alpha=0;
+            this.analog.alpha=0;
+            var velocX = (this.arrow.x-this.dude.x)*3;
+            var velocY = (this.arrow.y-this.dude.y)*3;
+            this.dude.body.velocity.set(velocX,velocY);
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            //物体移动开关
+            this.catchFlag = false;
+            //是否已经射出
+            this.launched=null;
+            game.load.image('background', '../../assets/misc/starfield.jpg');
+            game.load.image('dude', '../../assets/sprites/phaser-dude.png');
+            game.load.image('analog', '../../assets/tests/fusia.png');
+            game.load.image('arrow', '../../assets/sprites/longarrow2.png');
+
+        },
+        create:function(){
+            //设计游戏世界大小
+            game.world.setBounds(0,0,5000,600);
+            //添加瓦片到整个屏幕
+            game.add.tileSprite(0,0,5000,600,'background');
+            //创建一个图形容器
+            this.graphics = game.add.graphics(0,0);
+            //开始填充
+            this.graphics.beginFill(0x049e0c);
+            //填充为矩形,(x,y,w,h)
+            this.graphics.drawRect(395,400,10,200);
+
+            this.analog = game.add.sprite(400, 400, 'analog');
+            //设置宽度
+            this.analog.width=8;
+            //设置旋转的度数
+            this.analog.rotation=200;
+            //设置中心点
+            this.analog.anchor.setTo(0.5,0);
+            //设置透明度
+            this.analog.alpha=0;
+            //添加箭头
+            this.arrow = game.add.sprite(400,400,'arrow');
+            //设置中心点
+            this.arrow.anchor.setTo(0.1,0.5);
+            //设置透明度
+            this.arrow.alpha=0;
+            //添加任务
+            this.dude = game.add.sprite(150,320,'dude');
+            //设置中心点
+            this.dude.anchor.setTo(0.5,0.5);
+            //设置物体使用物理引擎
+            game.physics.arcade.enable(this.dude,Phaser.Physics.ARCADE);
+            //设置物体不超过世界范围
+            this.dude.body.collideWorldBounds= true;
+            //设置物体反弹
+            this.dude.body.bounce.set(0.9);
+            //
+            this.dude.body.drag.set(20,0);
+            //设置物体可以点击
+            this.dude.inputEnabled = true;
+            this.dude.input.start(0, true);
+            //在物体点击时触发事件
+            this.dude.events.onInputDown.add(this.setDude,this);
+            //在物体离开时触发事件
+            this.dude.events.onInputUp.add(this.launchDude,this);
+            this.myTween = game.add.tween(this.dude).to({x:150},1000,Phaser.Easing.Linear.None);
+            this.myTween.onComplete.add(this.reappear,this);
+            game.camera.follow(this.dude,Phaser.Camera.FOLLOW_TOPDOWN);
+        },
+        update:function(){
+            //箭头的角度跟随物体的角度
+            this.arrow.rotation=game.physics.arcade.angleBetween(this.arrow,this.dude);
+            if(this.catchFlag){
+                //鼠标到arrow得距离
+                var distance = game.physics.arcade.distanceToPointer(this.arrow);
+                //鼠标和arrow的角度
+                var theta = game.physics.arcade.angleToPointer(this.arrow);
+
+                //确认发射点
+                if(distance>300){
+                    distance = 300;
+                    //圆周运动
+                    var adjacentX = Math.cos(theta)*distance;
+                    var oppositeY = Math.sin(theta)*distance;
+                    this.dude.x = 400+adjacentX;
+                    this.dude.y = 400+oppositeY;
+                    this.analog.height=distance;
+                }else{
+                    this.dude.x = game.input.activePointer.worldX;
+                    this.dude.y = game.input.activePointer.worldY;
+                    this.analog.height=distance;
+                }
+                this.analog.rotation=this.arrow.rotation - Math.PI/2;
+                this.analog.alpha=0.5;
+                this.arrow.alpha=1;
+            }
+            //判断运动是否停止
+            var tweening = this.myTween.isRunning;
+            //判断是否在运动中,从是否运动,和已经放手,加上物体是否到了边界 deltaX 不懂
+            if(!tweening && this.launched && (this.dude.x>=game.world.width-20 || this.dude.body.deltaX()==0)){
+                this.dude.body.velocity.set(0,0);
+                this.dude.body.moves = false;
+                this.dude.alpha=0;
+                this.dude.x=100;
+                this.dude.y=320;
+                this.myTween.start();
+            }
+        },
+        setDude:function(obj){
+            if(!this.launched){
+                this.catchFlag=true;
+                game.camera.follow(null);
+                obj.body.moves = false;
+                //重力
+                obj.body.gravity.set(0);
+                //速度
+                obj.body.velocity.set(0);
+            }
+        },
+        launchDude:function(){
+            if(this.catchFlag){
+                this.catchFlag=false;
+                this.launched=true;
+                game.camera.follow(this.dude,Phaser.Camera.FOLLOW_TOPDOWN);
+                this.analog.alpha=0;
+                this.arrow.alpha=0;
+                var xvector = (this.arrow.x-this.dude.x)*3;
+                var yvector = (this.arrow.y-this.dude.y)*3;
+                this.dude.body.moves=true;
+                this.dude.body.gravity.set(0,180);
+                this.dude.body.velocity.setTo(xvector,yvector);
+
+            }
+        },
+        reappear:function(){
+            this.launched = false;
+            this.dude.alpha = 1;
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

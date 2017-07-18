@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('atari','../../assets/sprites/atari130xe.png');
+            game.load.image('mushroom','../../assets/sprites/mushroom2.png')
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.atari=game.add.sprite(200,50,'atari');
+            this.atari.name='hehe';
+            this.mushroom=game.add.sprite(600,50,'mushroom');
+            this.mushroom.name='mushroom';
+            game.physics.arcade.enable([this.atari,this.mushroom],Phaser.Physics.ARCADE);
+            this.atari.body.setSize(50,50,50,20);
+            this.atari.body.immovable=true;
+            this.mushroom.body.velocity.x=-100;
+        },
+        update:function(){
+            game.physics.arcade.collide(this.atari,this.mushroom,this.collideHandel,null,this);
+        },
+        render:function(){
+            game.debug.body(this.atari);
+            game.debug.body(this.mushroom);
+        },
+        collideHandel:function(atari,mushroom){
+            console.log(atari.name);
+            console.log(mushroom.name);
+            this.stage.backgroundColor='#f0f0f0';
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

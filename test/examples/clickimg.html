@@ -13,12 +13,15 @@
 <script>
     var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
     var gamestart = {
+        Selftext:null,
+        counter:0,
         preload:function(){
-            game.load.image('key1','../assets/platform.png');
+            game.load.image('key1','../assets/pics/ra_einstein.png');
         },
         create:function(){
             var img = game.add.image(0,game.world.centerY,'key1');
             img.anchor.setTo(0,0.5);
+            this.Selftext=game.add.text(250, 16, '', { fill: '#ffffff' });
             //开启物体可以点击
             img.inputEnabled=true;
             img.events.onInputDown.add(this.lister,this)
@@ -26,6 +29,8 @@
         lister:function(){
             console.log(this);
             console.log(1);
+            this.counter+=1;
+            this.Selftext.text = "You clicked " + this.counter + " times!";
         }
     };
     game.state.add('gamestart',gamestart);

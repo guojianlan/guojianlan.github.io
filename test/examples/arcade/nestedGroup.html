@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('spinner','../../assets/sprites/bluemetal_32x32x4.png', 32, 32);
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.sprites = game.add.group();
+            //this.sprites.enableBody = true;
+            for(var i=0;i<30;i++){
+                var s = this.sprites.create(game.rnd.integerInRange(100,700),game.rnd.integerInRange(30,320),'spinner');
+                s.name='spinner'+i;
+                s.animations.add('swin',[0,1,2,3]);
+                s.play('swin',20,true);
+                game.physics.enable(s,Phaser.Physics.ARCADE);
+                s.body.velocity.x=game.rnd.integerInRange(-200,200);
+                s.body.velocity.y=game.rnd.integerInRange(-200,200);
+            }
+            this.sprites.setAll('body.collideWorldBounds',true);
+            this.sprites.setAll('body.bounce.x',1);
+            this.sprites.setAll('body.bounce.y',1);
+            this.sprites.setAll('body.minBounceVelocity',0);
+        },
+        update:function(){
+            game.physics.arcade.collide(this.sprites);
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

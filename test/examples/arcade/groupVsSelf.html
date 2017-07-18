@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('spinner', '../../assets/sprites/bluemetal_32x32x4.png',32,32);
+
+        },
+        create:function(){
+            game.stage.backgroundColor="#2d2d2d";
+            this.sprites = game.add.physicsGroup(Phaser.Physics.ARCADE);
+            for(var i=0;i<90;i++){
+                var c = this.sprites.create(game.rnd.integerInRange(100,700),game.rnd.integerInRange(100,700),'spinner');
+                c.animations.add('anim',[0,1,2,3]);
+                c.play('anim',20,true);
+                c.body.velocity.set(game.rnd.integerInRange(-200,200),game.rnd.integerInRange(-200,200));
+            }
+            this.sprites.setAll('body.collideWorldBounds',true);
+            this.sprites.setAll('body.bounce.x',1);
+            this.sprites.setAll('body.bounce.y',1);
+
+        },
+        update:function(){
+            game.physics.arcade.collide(this.sprites);
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

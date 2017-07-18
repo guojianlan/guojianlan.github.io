@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.CANVAS,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('atari', '../../assets/sprites/atari130xe.png');
+            game.load.image('mushroom', '../../assets/sprites/mushroom2.png');
+
+        },
+        create:function(){
+            //开启物理环境
+            game.stage.backgroundColor='#2d2d2d';
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.sprite1 = game.add.sprite(150,150,'atari');
+            this.sprite2 = game.add.sprite(600,150,'mushroom');
+            game.physics.enable([this.sprite1,this.sprite2],Phaser.Physics.ARCADE);
+            this.sprite1.body.immovable = true;
+            this.sprite2.body.velocity.setTo(-80,0);
+
+        },
+        update:function(){
+            game.physics.arcade.collide(this.sprite1,this.sprite2,this.collideHandle,null,this);
+        },
+        collideHandle:function(sprite1,sprite2){
+                sprite2.kill();
+                game.stage.backgroundColor='#ff0000';
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

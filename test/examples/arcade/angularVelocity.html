@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('arrow', '../../assets/sprites/arrow.png');
+        },
+        create:function(){
+            game.stage.backgroundColor="#cccccc";
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            //开启物理引擎
+            this.arrow = game.add.sprite(400,300,'arrow');
+            this.arrow.anchor.setTo(0.5,0.5);
+            //设置中心点
+            game.physics.enable(this.arrow,Phaser.Physics.ARCADE);
+
+        },
+        update:function(){
+            this.arrow.body.velocity.x=0;
+            this.arrow.body.velocity.y=0;
+            this.arrow.body.angularVelocity=0;
+            if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+                this.arrow.body.angularVelocity=-200;
+            }else if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+                this.arrow.body.angularVelocity=200;
+            }
+            if(game.input.keyboard.isDown(Phaser.Keyboard.UP)){
+                game.physics.arcade.velocityFromAngle(this.arrow.angle,300,this.arrow.body.velocity);
+            }
+        },
+        render:function(){
+            game.debug.spriteInfo(this.arrow, 32, 32);
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

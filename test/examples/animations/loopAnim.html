@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(400,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+           game.load.atlasJSONHash('bot','../../assets/sprites/running_bot.png','../../assets/sprites/running_bot.json');
+        },
+        create:function(){
+            this.sprite = game.add.sprite(100, 200, 'bot');
+            this.sprite.animations.add('run');
+            this.sprite.animations.play('run',15,true);
+
+        },
+        update:function(){
+            this.sprite.x-=2;
+            if(this.sprite.x<-this.sprite.width){
+                this.sprite.x=game.width;
+            }
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

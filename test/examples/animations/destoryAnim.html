@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('mummy','../../assets/sprites/metalslug_mummy37x45.png',37,45,18);
+        },
+        create:function(){
+            this.sprites = game.add.group();
+            game.time.events.loop(50,this.createSprite,this);
+        },
+        createSprite:function(){
+            var mummy = this.sprites.create(0,game.world.randomY,'mummy');
+            mummy.animations.add('run');
+            mummy.animations.play('run',15,true);
+        },
+        update:function(){
+            this.sprites.setAll('x', 10, true, true, 1);
+            this.sprites.forEach(this.checkSprite,this,true);
+        },
+        checkSprite:function(sprite){
+            try{
+                if(sprite.x>game.width){
+                    this.sprites.remove(sprite,true);
+                }
+            }catch(e){
+                console.log(sprite);
+            }
+        },
+        render:function(){
+            game.debug.text("Group size: " + this.sprites.total, 32, 32);
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

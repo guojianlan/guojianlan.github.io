@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('car', '../../assets/sprites/car90.png');
+            game.load.image('baddie', '../../assets/sprites/space-baddie.png');
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.aliens = game.add.group();
+            this.aliens.enableBody = true;
+            for(var i=0;i<50;i++){
+                var s = this.aliens.create(game.world.randomX,game.world.randomY,'baddie');
+                s.name='aliens'+i;
+                s.body.collideWorldBounds = true;
+                s.body.bounce.setTo(0.8);
+                s.body.velocity.setTo(10+Math.random()*40,10+Math.random()*40);
+            }
+            this.car = game.add.sprite(200,200,'car');
+            this.car.name='car';
+            this.car.anchor.set(0.5);
+            game.physics.arcade.enable(this.car,Phaser.Physics.ARCADE);
+            this.car.body.collideWorldBounds=true;
+            this.car.body.bounce.set(0.8);
+            this.car.body.allowRotation = true;
+            this.car.body.immovable=true;
+            this.cursors = game.input.keyboard.createCursorKeys();
+            this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            this.spaceKey.onDown.add(this.togglePause,this);
+
+        },
+        update:function(){
+            game.physics.arcade.collide(this.car,this.aliens);
+            this.car.body.velocity.x=0;
+            this.car.body.velocity.y=0;
+            this.car.body.angularVelocity=0;
+            if(this.cursors.left.isDown){
+                this.car.body.angularVelocity=-200;
+            }else if(this.cursors.right.isDown){
+                this.car.body.angularVelocity=200;
+            }
+            if(this.cursors.up.isDown){
+                this.car.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(this.car.angle,300));
+            }
+        },
+        togglePause:function(){
+            game.physics.arcade.isPaused=!game.physics.arcade.isPaused
+        }
+
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

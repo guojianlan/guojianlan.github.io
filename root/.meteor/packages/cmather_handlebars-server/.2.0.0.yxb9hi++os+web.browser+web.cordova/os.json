@@ -1,0 +1,39 @@
+{
+  "format": "isopack-2-unibuild",
+  "declaredExports": [
+    {
+      "name": "Handlebars",
+      "testOnly": false
+    },
+    {
+      "name": "OriginalHandlebars",
+      "testOnly": false
+    }
+  ],
+  "uses": [
+    {
+      "package": "meteor"
+    },
+    {
+      "package": "handlebars",
+      "constraint": "1.0.0"
+    },
+    {
+      "package": "underscore",
+      "constraint": "1.0.0"
+    }
+  ],
+  "node_modules": "npm/node_modules",
+  "resources": [
+    {
+      "type": "source",
+      "extension": "js",
+      "file": "os/packages/cmather:handlebars-server.js",
+      "length": 1054,
+      "offset": 0,
+      "usesDefaultSourceProcessor": true,
+      "path": "/packages/cmather:handlebars-server.js",
+      "hash": "8fd66248edbb24879c4982bbb3330f04de8575e6"
+    }
+  ]
+}

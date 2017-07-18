@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('dude', '../../assets/sprites/phaser-dude.png');
+            game.load.image('bullet', '../../assets/misc/bullet0.png');
+            game.load.spritesheet('veggies', '../../assets/sprites/fruitnveg32wh37.png',32,32);
+
+
+        },
+        create:function(){
+            game.stage.backgroundColor="#2d2d2d";
+            this.bulletTime = 0;
+            this.veggies= game.add.group();
+            this.veggies.enableBody=true;
+            this.veggies.physicsBodyType = Phaser.Physics.ARCADE;
+            for(var i=0;i<50;i++){
+                var c = this.veggies.create(game.world.randomX,Math.random()*500,'veggies',game.rnd.integerInRange(0,36));
+                c.name='veg'+i;
+                c.body.immovable=true;
+            }
+            this.bulllets = game.add.group();
+            this.bulllets.enableBody=true;
+            this.bulllets.physicsBodyType = Phaser.Physics.ARCADE;
+            for(var i=0;i<20;i++){
+                var b = this.bulllets.create(0,0,'bullet');
+                b.name='bul'+i;
+                b.exists=false;
+                b.visible = false;
+                b.checkWorldBounds=true;
+                b.events.onOutOfBounds.add(this.resetBullet, this);
+            }
+            this.dude = game.add.sprite(400,550,'dude');
+            game.physics.arcade.enable(this.dude,Phaser.Physics.ARCADE);
+            this.cursors = game.input.keyboard.createCursorKeys();
+            game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+
+        },
+        update:function(){
+            game.physics.arcade.overlap(this.bulllets,this.veggies,this.overlapHandle,null,this);
+            this.dude.body.velocity.x=0;
+            if(this.cursors.left.isDown){
+                this.dude.body.velocity.x=-200;
+            }else if(this.cursors.right.isDown){
+                this.dude.body.velocity.x=200;
+            }
+            if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+                this.fireBullet();
+            }
+        },
+        resetBullet:function(bul){
+            bul.kill();
+        },
+        fireBullet:function(){
+            if (game.time.now > this.bulletTime){
+                var bullet = this.bulllets.getFirstExists(false);
+                if(bullet){
+                    bullet.reset(this.dude.x+6,this.dude.y+6);
+                    bullet.body.velocity.y=-300;
+                    this.bulletTime = game.time.now + 150;
+                }
+            }
+        },
+        overlapHandle:function(bulllets,veggies){
+            bulllets.kill();
+            veggies.kill();
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

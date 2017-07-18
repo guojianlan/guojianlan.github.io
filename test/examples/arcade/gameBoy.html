@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('gameboy', '../../assets/sprites/gameboy_seize_color_40x60.png',40,60);
+
+        },
+        create:function(){
+
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.stage.backgroundColor='#666666';
+            this.boy1 = game.add.sprite(300,0,'gameboy');
+            this.boy2 = game.add.sprite(300,350,'gameboy');
+            game.physics.arcade.enable([this.boy1,this.boy2],Phaser.Physics.ARCADE);
+            game.physics.arcade.gravity.y=100;
+            this.boy1.body.bounce.y=0.95;
+
+            this.boy1.body.collideWorldBounds = true;
+            //不运动
+            this.boy2.body.allowGravity = false;
+            //碰撞之后不动
+            this.boy2.body.immovable = true;
+
+            game.input.onDown.add(this.onDown,this);
+
+        },
+        update:function(){
+            game.physics.arcade.collide(this.boy1,this.boy2);
+        },
+        onDown:function(){
+            //开始物体的物理环境
+            if(this.boy2.body.enable){
+                this.boy2.body.enable = false;
+            }else{
+                this.boy2.body.enable = true;
+            }
+
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

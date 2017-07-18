@@ -14,12 +14,12 @@
     var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
     var gamestart = {
         preload:function(){
-            game.load.spritesheet('key1','../assets/dude.png',32,48);
+            game.load.atlasJSONHash('bot','../assets/sprites/running_bot.png','../assets/sprites/running_bot.json');
         },
         create:function(){
             //开启物理引擎
-           this.sprite = game.add.sprite(100,100,'key1');
-            this.sprite.animations.add('left',[0,1,2,3],true);
+           this.sprite = game.add.sprite(100,100,'bot');
+            this.sprite.animations.add('left');
             this.sprite.animations.play('left',15,true);
         }
     };

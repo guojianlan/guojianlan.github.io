@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('dude','../../assets/sprites/phaser-dude.png');
+            game.load.spritesheet('veggies','../../assets/sprites/fruitnveg32wh37.png',32,32)
+
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.world.setBounds(0,0,2000,1200);
+            game.stage.backgroundColor='#2d2d2d';
+            this.dude = game.add.sprite(1940,400,'dude');
+            game.physics.enable(this.dude,Phaser.Physics.ARCADE);
+            this.dude.anchor.set(0.5);
+            this.dude.body.collideWorldBounds = true;
+            this.cursors = game.input.keyboard.createCursorKeys();
+            game.camera.follow(this.dude);
+            this.group = game.add.physicsGroup(Phaser.Physics.ARCADE);
+            for(var i=0;i<400;i++){
+                var c = this.group.create(game.rnd.integerInRange(200, 1900),game.rnd.integerInRange(0, 1100),'veggies',game.rnd.integerInRange(0,35));
+                c.name='veggies'+i;
+                c.body.immovable=true;
+            }
+            for(var i=0;i<50;i++){
+                var c = this.group.create(game.rnd.integerInRange(200, 1900),game.rnd.integerInRange(0, 1100),'veggies',17);
+                c.body.immovable=true;
+            }
+
+        },
+        update:function(){
+            this.dude.body.velocity.x=0;
+            this.dude.body.velocity.y=0;
+            game.physics.arcade.collide(this.dude, this.group, this.collisionHandler, null, this);
+            if(this.cursors.up.isDown){
+                this.dude.body.velocity.y=-200;
+            }else if(this.cursors.down.isDown){
+                this.dude.body.velocity.y=200;
+            }
+            if(this.cursors.left.isDown){
+                this.dude.body.velocity.x=-200;
+            }else if(this.cursors.right.isDown){
+                this.dude.body.velocity.x=200;
+            }
+
+        },
+        collisionHandler:function(dude,veg){
+            if(veg.frame==17){
+                veg.kill();
+            }
+        }
+
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

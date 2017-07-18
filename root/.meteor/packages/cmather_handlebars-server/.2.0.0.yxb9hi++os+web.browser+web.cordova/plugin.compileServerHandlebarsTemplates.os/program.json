@@ -1,0 +1,26 @@
+{
+  "format": "javascript-image-pre1",
+  "arch": "os",
+  "load": [
+    {
+      "sourceMap": "packages/underscore.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/underscore.js"
+    },
+    {
+      "sourceMap": "packages/meteor.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/meteor.js"
+    },
+    {
+      "sourceMap": "packages/handlebars.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/handlebars.js"
+    },
+    {
+      "sourceMap": "packages/compileServerHandlebarsTemplates:plugin.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/compileServerHandlebarsTemplates:plugin.js"
+    }
+  ]
+}

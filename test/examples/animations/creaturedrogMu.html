@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('sky','../../assets/skies/deepblue.png');
+            game.load.image('dragonTexture','../../assets/creature/dragon.png');
+            game.load.json('dragonMesh','../../assets/creature/dragon.json');
+        },
+        create:function(){
+            this.sky = game.add.image(0,0,'sky');
+            this.dragon = game.add.creature(150,150,'dragonTexture','dragonMesh');
+            this.dragon.scale.set(4);
+            this.dragon.play(true);
+        },
+        update:function(){
+            this.dragon.x+=2;
+            if(this.dragon.x>=400){
+                this.dragon.x=150;
+            }
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

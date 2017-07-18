@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.atlas('seacreatures','../../assets/sprites/seacreatures_json.png', '../../assets/sprites/seacreatures_json.json')
+            game.load.image('undersea', '../../assets/pics/undersea.jpg');
+            game.load.image('coral', '../../assets/pics/seabed.png');
+        },
+        create:function(){
+            game.add.image(0,0,'undersea');
+            var groups = game.add.group();
+            for(var i=0;i<6;i++){
+                groups.create(120*i,game.rnd.integerInRange(100,400),'seacreatures','octopus0000');
+            }
+            var frameNames = Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4);
+            groups.callAll('animations.add','animations','swim',frameNames,30,true,false);
+            groups.callAll('play', null, 'swim');
+            game.add.sprite(0, 466, 'coral');
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

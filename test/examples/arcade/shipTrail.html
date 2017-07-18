@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('chunk','../../assets/sprites/chunk.png');
+            game.load.image('arrow','../../assets/sprites/asteroids_ship.png')
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.stage.backgroundColor='#124184';
+            this.bmd = game.add.bitmapData(800,600);
+            this.bmd.context.fillStyle='#ffffff';
+            this.bg = game.add.sprite(0,0,this.bmd);
+            game.physics.arcade.gravity.y=100;
+            this.arrow = game.add.sprite(100,500,'arrow');
+            this.arrow.anchor.set(0.5);
+            game.physics.enable(this.arrow,Phaser.Physics.ARCADE);
+            this.arrow.body.collideWorldBounds=true;
+            this.arrow.body.bounce.set(0.8);
+            game.input.onDown.add(this.launch,this);
+        },
+        update:function(){
+            this.arrow.rotation = this.arrow.body.angle;
+            this.bmd.context.fillRect(this.arrow.x, this.arrow.y, 2, 2);
+            this.bmd.dirty = true;
+        },
+        launch:function(){
+            if(game.input.x<this.arrow.x){
+                this.arrow.body.velocity.setTo(-200,-200);
+            }else{
+                this.arrow.body.velocity.setTo(200,200);
+            }
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

@@ -14,7 +14,7 @@
     var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
     var gamestart = {
         preload:function(){
-            game.load.image('key1','../assets/platform.png');
+            game.load.image('key1','../assets/sprites/phaser.png');
         },
         create:function(){
             //开启物理引擎
@@ -25,7 +25,7 @@
             this.sprite.inputEnabled=true;
             this.sprite.events.onInputDown.add(this.lister,this,this.sprite);
             //开启物体的物理环境
-           game.physics.arcade.enable(this.sprite);
+            game.physics.arcade.enable(this.sprite,Phaser.Physics.ARCADE);
             //物理速度沿X
 //            this.sprite.body.velocity.x=150;
         },
@@ -34,7 +34,7 @@
             console.log(1);
         },
         update:function(){
-            //物体和鼠标离开8像素
+            //物体和鼠标离开8像素 distance 距离
             if(game.physics.arcade.distanceToPointer(this.sprite,game.input.activePointer)>8){
 //                300毫秒移动到鼠标的地方
                 game.physics.arcade.moveToPointer(this.sprite, 300);

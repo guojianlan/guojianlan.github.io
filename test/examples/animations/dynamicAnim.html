@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('orb','../../assets/sprites/orb-blue.png');
+        },
+        create:function(){
+            game.stage.backgroundColor = '#cccccc';
+            this.orb = game.make.sprite(0,0,'orb');
+            this.bmd = game.add.bitmapData(355,22);
+            var x = 0;
+            var y=-22;
+            for(var i=0;i<16;i++){
+                this.bmd.draw(this.orb,x,y);
+                x+=22;
+                y+=3;
+            }
+            game.add.image(0,0,this.bmd);
+            game.cache.addSpriteSheet('dynamic', '', this.bmd.canvas, 22, 22, 16, 0, 0);
+            for(var i=0;i<16;i++){
+                var test = game.add.sprite(200,100 + (i * 22),'dynamic');
+                test.animations.add('run');
+                test.animations.play('run',15,true);
+            }
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

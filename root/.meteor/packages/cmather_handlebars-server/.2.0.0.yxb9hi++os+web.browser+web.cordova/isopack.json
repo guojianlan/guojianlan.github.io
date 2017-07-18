@@ -1,0 +1,62 @@
+{
+  "isopack-2": {
+    "name": "cmather:handlebars-server",
+    "summary": "Allows handlebars templates to be defined on the server in .handlebars files",
+    "version": "2.0.0",
+    "isTest": false,
+    "builds": [
+      {
+        "kind": "main",
+        "arch": "os",
+        "path": "os.json"
+      },
+      {
+        "kind": "main",
+        "arch": "web.browser",
+        "path": "web.browser.json"
+      },
+      {
+        "kind": "main",
+        "arch": "web.cordova",
+        "path": "web.cordova.json"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "compileServerHandlebarsTemplates",
+        "arch": "os",
+        "path": "plugin.compileServerHandlebarsTemplates.os/program.json"
+      }
+    ]
+  },
+  "isopack-1": {
+    "name": "cmather:handlebars-server",
+    "summary": "Allows handlebars templates to be defined on the server in .handlebars files",
+    "version": "2.0.0",
+    "isTest": false,
+    "builds": [
+      {
+        "kind": "main",
+        "arch": "os",
+        "path": "os-legacy.json"
+      },
+      {
+        "kind": "main",
+        "arch": "web.browser",
+        "path": "web.browser-legacy.json"
+      },
+      {
+        "kind": "main",
+        "arch": "web.cordova",
+        "path": "web.cordova-legacy.json"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "compileServerHandlebarsTemplates",
+        "arch": "os",
+        "path": "plugin.compileServerHandlebarsTemplates.os/program.json"
+      }
+    ]
+  }
+}

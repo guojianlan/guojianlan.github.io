@@ -1,0 +1,36 @@
+{
+  "format": "unipackage-unibuild-pre1",
+  "uses": [
+    {
+      "package": "meteor"
+    },
+    {
+      "package": "handlebars",
+      "constraint": "1.0.0"
+    },
+    {
+      "package": "underscore",
+      "constraint": "1.0.0"
+    }
+  ],
+  "node_modules": "npm/node_modules",
+  "resources": [
+    {
+      "type": "prelink",
+      "file": "os-legacy/packages/cmather_handlebars-server/packages/cmather_handlebars-server.js",
+      "length": 1054,
+      "offset": 0,
+      "servePath": "/packages/cmather_handlebars-server/packages/cmather_handlebars-server.js"
+    }
+  ],
+  "packageVariables": [
+    {
+      "name": "Handlebars",
+      "export": true
+    },
+    {
+      "name": "OriginalHandlebars",
+      "export": true
+    }
+  ]
+}

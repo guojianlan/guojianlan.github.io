@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            //物体移动开关
+            this.catchFlag = false;
+            //是否已经射出
+            this.launched=null;
+            game.load.image('ball','../../assets/sprites/pangball.png');
+            game.load.image('analog', '../../assets/tests/fusia.png');
+            game.load.image('arrow', '../../assets/sprites/longarrow2.png');
+
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.physics.arcade.gravity.y=200;
+            game.stage.backgroundColor="#ccc";
+            this.graphics = game.add.graphics(0,0);
+            this.graphics.beginFill('0x049e0c');
+            this.graphics.drawRect(395,359,10,250);
+            this.analog = game.add.sprite(400, 350, 'analog');
+            game.physics.arcade.enable(this.analog,Phaser.Physics.ARCADE);
+            this.analog.width=8;
+            this.analog.rotation=220;
+            this.analog.anchor.setTo(0.5,0);
+            this.analog.body.allowGravity = false;
+            this.analog.alpha=0;
+            this.arrow = game.add.sprite(400,350,'arrow');
+            game.physics.arcade.enable(this.arrow,Phaser.Physics.ARCADE);
+            this.arrow.anchor.setTo(0.1,0.5);
+            this.arrow.body.moves=false;
+            this.arrow.body.allowGravity = false;
+            this.arrow.alpha=0;
+
+            this.ball = game.add.sprite(200,200,'ball');
+            game.physics.arcade.enable(this.ball,Phaser.Physics.ARCADE);
+            this.ball.body.collideWorldBounds=true;
+            this.ball.body.bounce.set(0.9);
+            this.ball.anchor.setTo(0.5,0.5);
+            this.ball.inputEnabled=true;
+            this.ball.input.start(0,true);
+            this.ball.events.onInputDown.add(this.setBall,this);
+            this.ball.events.onInputUp.add(this.fly,this);
+        },
+        update:function(){
+            this.arrow.rotation = game.physics.arcade.angleBetween(this.arrow,this.ball);
+            if(this.catchFlag){
+                this.ball.x = game.input.activePointer.worldX;
+                this.ball.y = game.input.activePointer.worldY;
+                this.arrow.alpha=1;
+                this.analog.rotation = this.arrow.rotation-3.14/2;
+                this.analog.alpha=0.5;
+                this.analog.height = game.physics.arcade.distanceToPointer(this.arrow);
+
+            }
+        },
+        setBall:function(){
+           this.catchFlag=true;
+           this.ball.body.moves=false;
+           this.ball.body.velocity.set(0,0);
+           this.ball.body.allowGravity=false;
+        },
+        fly:function(){
+            this.catchFlag=false;
+            this.ball.body.moves=true;
+            this.ball.body.allowGravity=true;
+            this.arrow.alpha=0;
+            this.analog.alpha=0;
+            var locityX = (this.arrow.x-this.ball.x)*3;
+            var locityY = (this.arrow.y-this.ball.y)*3;
+            this.ball.body.velocity.set(locityX,locityY);
+
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

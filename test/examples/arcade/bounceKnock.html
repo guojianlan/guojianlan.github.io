@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.CANVAS,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('dude', '../../assets/sprites/phaser-dude.png');
+            game.load.image('ball', '../../assets/sprites/pangball.png');
+
+        },
+        create:function(){
+            //开启物理环境
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.cursors = game.input.keyboard.createCursorKeys();
+            this.dude = game.add.sprite(400,200,'dude');
+            this.ball = game.add.sprite(600,200,'ball');
+            game.physics.enable([this.dude,this.ball],Phaser.Physics.ARCADE);
+            this.dude.body.immovable=true;
+            this.ball.body.velocity.setTo(200,200);
+            this.ball.body.collideWorldBounds=true;
+            this.ball.body.bounce.setTo(1, 1);
+
+        },
+        update:function(){
+            game.physics.arcade.collide(this.dude,this.ball);
+            if(this.cursors.up.isDown){
+                this.dude.body.velocity.y=-300;
+            }else if(this.cursors.down.isDown){
+                this.dude.body.velocity.y=300;
+            }else if(this.cursors.left.isDown){
+                this.dude.body.velocity.x=-300;
+            }else if(this.cursors.right.isDown){
+                this.dude.body.velocity.x=300;
+            }else{
+                this.dude.body.velocity.setTo(0,0);
+            }
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

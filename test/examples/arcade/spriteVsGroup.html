@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    Vegetable = function(game){
+        var frame = game.rnd.between(0,35);
+        if(frame===17){
+            frame=1;
+        }
+        var x = game.rnd.between(100,700);
+        var y = game.rnd.between(0,550);
+        Phaser.Image.call(this,game,x,y,'veggies',frame);
+    };
+    Chilli = function(game){
+        var x = game.rnd.between(100,700);
+        var y = game.rnd.between(0,550);
+        Phaser.Sprite.call(this,game,x,y,'veggies',17);
+        game.physics.arcade.enable(this);
+    };
+    Vegetable.prototype = Object.create(Phaser.Image.prototype);
+    Vegetable.prototype.constructor = Vegetable;
+    Chilli.prototype = Object.create(Phaser.Sprite.prototype);
+    Chilli.prototype.constructor = Chilli;
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('veggies', '../../assets/sprites/fruitnveg32wh37.png',32,32);
+            game.load.image('dude', '../../assets/sprites/phaser-dude.png');
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.stage.backgroundColor='#666666';
+            this.group = game.add.group();
+            for(var i=0;i<50;i++){
+                this.group.add(new Vegetable(game));
+            }
+            for(var i=0;i<20;i++){
+                this.group.add(new Chilli(game));
+            }
+            this.dude = game.add.sprite(10,200,'dude');
+            game.physics.arcade.enable(this.dude,Phaser.Physics.ARCADE);
+            this.cursors = game.input.keyboard.createCursorKeys();
+        },
+        createVegetable:function(){
+            var frame = game.rnd.between(0,35);
+            if(frame===17){
+                frame=1;
+            }
+            var x = game.rnd.between(100,700);
+            var y = game.rnd.between(0,550);
+            return game.add.image(x,y,'veggies',frame);
+        },
+        update:function(){
+            game.physics.arcade.overlap(this.dude,this.group,this.collideHandle,null,this);
+            this.dude.body.velocity.setTo(0,0);
+            if(this.cursors.up.isDown){
+                this.dude.body.velocity.y=-200;
+            }else if(this.cursors.down.isDown){
+                this.dude.body.velocity.y=200;
+            }
+            if(this.cursors.left.isDown){
+                this.dude.body.velocity.x=-200;
+            }else if(this.cursors.right.isDown){
+                this.dude.body.velocity.x=200;
+            }
+        },
+        collideHandle:function(dude,group){
+            group.kill();
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

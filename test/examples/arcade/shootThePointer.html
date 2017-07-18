@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.image('arrow','../../assets/sprites/arrow.png');
+            game.load.image('bullet','../../assets/sprites/purple_ball.png')
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.stage.backgroundColor='#313131';
+            this.firetime=0;
+            this.bullets = game.add.group();
+            this.bullets.enableBody=true;
+            this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+            this.bullets.createMultiple(50,'bullet');
+            this.bullets.setAll('checkWorldBounds',true);
+            this.bullets.setAll('outOfBoundsKill',true);
+            this.arrow= game.add.sprite(300,300,'arrow');
+            game.physics.enable(this.arrow,Phaser.Physics.ARCADE);
+            this.arrow.anchor.set(0.5);
+            this.arrow.body.allowRotation = false;
+
+        },
+        update:function(){
+            this.arrow.rotation = game.physics.arcade.angleToPointer(this.arrow);
+            if(game.input.activePointer.isDown){
+                this.fire();
+            }
+        },
+        fire:function(){
+            if(game.time.now>this.firetime && this.bullets.countDead()>0){
+                this.firetime =game.time.now+100;
+                var bullet = this.bullets.getFirstDead(false);
+                bullet.reset(this.arrow.x-8,this.arrow.y-8);
+                game.physics.arcade.moveToPointer(bullet, 600);
+            }
+        }
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>

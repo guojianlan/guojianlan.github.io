@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>捡星星</title>
+    <style>
+        body{margin:0;}
+    </style>
+    <script src="../../js/phaser.min.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var game = new Phaser.Game(800,600,Phaser.AUTO,'container');
+    var gamestart = {
+        preload:function(){
+            game.load.spritesheet('gameboy','../../assets/sprites/gameboy_seize_color_40x60.png',40,60);
+            game.load.image('atari','../../assets/sprites/atari130xe.png')
+        },
+        create:function(){
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.atari=game.add.sprite(300,200,'atari');
+            this.gameboy1 = game.add.sprite(320,500,'gameboy',1);
+            this.gameboy2 = game.add.sprite(40,240,'gameboy',2);
+            game.physics.arcade.enable([this.atari,this.gameboy1,this.gameboy2],Phaser.Physics.ARCADE);
+            this.atari.body.immovable=true;
+            this.atari.body.collideWorldBounds = true;
+            this.atari.body.bounce.set(1);
+            this.atari.body.checkCollision.up=false;
+            this.atari.body.checkCollision.down=false;
+            this.gameboy1.body.collideWorldBounds=true;
+            this.gameboy1.body.velocity.y=-200;
+            this.gameboy1.body.bounce.set(1);
+            this.gameboy2.body.collideWorldBounds=true;
+            this.gameboy2.body.velocity.x=200;
+            this.gameboy2.body.bounce.set(1);
+        },
+        update:function(){
+            game.physics.arcade.collide(this.atari,this.gameboy1);
+            game.physics.arcade.collide(this.atari,this.gameboy2);
+        }
+
+    };
+    game.state.add('gamestart',gamestart);
+    game.state.start('gamestart');
+</script>
+</body>
+</html>
