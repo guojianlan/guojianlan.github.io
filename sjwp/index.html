@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>保卫味蕾</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /><!-- 锁定页面，禁止放大和缩小 -->
+<script src="http://ad.lmbang.com/js/requestAnimationFrame.js"></script>
+<script src="http://ad.lmbang.com/js/aes-min.js?v=0.02"></script>
+<script src="http://ad.lmbang.com/js/md5.js?v=0.02"></script>
+<script src="http://ad.lmbang.com/js/pad-zeropadding-min.js?v=0.02"></script>
+<script src="http://www.lmbang.com/static/js/tiny.js?v=0.02" type="text/javascript"></script>
+<script src="http://www.lmbang.com/static/js/common.js?v=0.02" type="text/javascript"></script>
+<script src="http://wx.api.lmbang.com/static/js/WeixinApi.js?v=0.01" type="text/javascript"></script>
+<style>
+*{margin:0; padding:0;font-family: 微软雅黑,黑体,宋体; font-size:12px;}
+body{width:100%;height:100%; overflow:hidden;-webkit-tap-highlight-color: rgba(0,0,0,0);margin:0; padding:0;}
+.load{width:100%;height:100%; text-align:center;background:url(http://s06.lmbang.com/M00/A9/50/DhFprFRRHkiAASaMAAAH2jLQMNw480.jpg) no-repeat center ; background-size:cover;position:fixed; overflow:hidden;}
+.loading{background:url(http://s03.lmbang.com/M00/A9/50/DhFprFRRHbKAWLs8AAAX9D2W1cI803.png) no-repeat center;background-size:60px 60px;height:60px;width:180px;margin:0 auto;position:relative;top:50%; text-align:right;line-height:60px;}
+.loading5{background:url(http://s07.lmbang.com/M00/97/93/eQ519FRRHfKAE32hAAAbs-y4toc168.png) no-repeat center;background-size:60px 60px;height:60px;width:180px;margin:0 auto;position:relative;top:50%; text-align:right;line-height:60px;}
+.loading10{background:url(http://s05.lmbang.com/M00/97/93/eQ519FRRHhSANLUJAAAX6AYOvCw022.png) no-repeat center;background-size:60px 60px;height:60px;width:180px;margin:0 auto;position:relative;top:50%; text-align:right;line-height:60px;}
+.main{position:fixed;width:100%;height:100%;background:url(http://s01.lmbang.com/M00/97/93/eQ519FRRHoaAYkHlAAAkUMuEGBQ383.jpg) no-repeat center; background-size:cover; overflow:hidden;}
+.banner{background:url(http://s05.lmbang.com/M00/97/93/eQ519FRRHhSANLUJAAAX6AYOvCw022.png) no-repeat center;height:60px;width:60px;margin-top:3%;background-size:cover;;margin-left:3%;}
+.dabenxiang{height:45%;margin:0px auto;background:url(http://ad.lmbang.com/popularize?key=jXimQ9) no-repeat center; background-size:contain;}
+.kaishiyouxi{width:200px;position:relative;left:50%;margin-left:-100px;height:37px;text-align:center;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;line-height:37px;font-size:16px;color:#4E6E02;}
+.jifenbang{width:200px;position:relative;left:50%;margin-left:-100px;height:37px;text-align:center;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;line-height:37px;margin-top:2%;font-size:16px;color:#4E6E02;}
+.youxishuoming{width:200px;position:relative;left:50%;margin-left:-100px;height:37px;text-align:center;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;line-height:37px;margin-top:2%;font-size:16px;color:#4E6E02;}
+.qzsmzz{background:#4D6D01; position:absolute;height:260px;width:265px;background-size:265px 475px; opacity:0.8;left:50%;margin-left:-132px;top:50%;margin-top:-132px;z-index:999;}
+.qzsm{ position:absolute;height:475px;width:240px;left:50%;margin-left:-120px;margin-top:-132px;top:50%;z-index:999;}
+.qzsmcl{font-size:14px;color:#fff;text-align:right;margin-left:190px;width:30px;margin-top:10px;}
+.qzsmt{text-align:center;font-size:14px;color:#fff;}
+.tcsm1{height:90%; background:url(http://s03.lmbang.com/M00/97/94/eQ519FRRH_CAZAyPAAP2uoWSSTc076.png) top center no-repeat;background-size:contain; position:relative;}
+.tcsm1 img{width:287px;margin-top:2%;}
+.xiayiye{line-height:37px;height:37px;text-align:center;background-size:contain;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;font-size:15px;color:#4E6E02;position:absolute;bottom:-24px;width:200px;left:50%;margin-left:-100px;}
+.xiayiye2{line-height:37px;height:37px;text-align:center;background-size:contain;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;font-size:15px;color:#4E6E02;position:absolute;bottom:-40px;width:200px;left:50%;margin-left:-100px;}
+.xiayiye4{line-height:37px;height:37px;text-align:center;background-size:contain;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;font-size:15px;color:#4E6E02;position:absolute;bottom:-50px;width:200px;left:50%;margin-left:-100px;}
+.tcsm2{height:80%;background:url(http://s01.lmbang.com/M00/AA/09/DhFprFRR1huAaXL5AALWQDibtPM252.png) top center no-repeat;background-size:contain; position:relative;}
+.tcsm2 img{width:234px;margin-top:2%;}
+.tcsm3{height:80%;background:url(http://s01.lmbang.com/M00/97/94/eQ519FRRIC-AHKVKAAJ7rzQgwcQ522.png) top center no-repeat;background-size:contain; position:relative;}
+.tcsm3 img{width:263px;margin-top:2%;}
+.tcsm4{height:87%;background:url(http://s05.lmbang.com/M00/A9/52/DhFprFRRIGaAfJVWAAQJ_xFiiFw049.png) top center no-repeat;background-size:contain; position:relative;}
+.yxtitle{background:url(http://s05.lmbang.com/M00/A9/52/DhFprFRRIHqAJqHgAADpwDgKDNI283.png) no-repeat center; background-size:167px 70px;height:70px;margin-top:10%;}
+.djs1{background:url(http://s01.lmbang.com/M00/97/94/eQ519FRRHzWAHPUGAAAN9n0nY4E447.png) no-repeat center; background-size:38px 91px;height:91px;margin-top:20%;}
+.djs2{background:url(http://s06.lmbang.com/M00/A9/51/DhFprFRRH1KAFDHHAAAYqJH8nO4492.png) no-repeat center; background-size:56px 87px;height:87px;margin-top:20%;}
+.djs3{background:url(http://s01.lmbang.com/M00/A9/51/DhFprFRRH3OAO70eAAAaCvzTBAY963.png) no-repeat center; background-size:56px 87px;height:87px;margin-top:20%;}
+.djs0{background:url(http://s05.lmbang.com/M00/A9/51/DhFprFRRH5aAfHJtAABRTiTdD0k895.png) no-repeat center; background-size:220px 67px;height:67px;margin-top:20%;}
+.cs{width:60px;height:40px; overflow:auto;position:absolute;left:60px;top:60px;}
+.header{height:27px;margin-top:3%;}
+.htitle{height:27px;width:64px;background:url(http://s05.lmbang.com/M00/A9/52/DhFprFRRIHqAJqHgAADpwDgKDNI283.png) no-repeat center;background-size:64px 27px;float:left;margin-left:5%;}
+.hfenshu{height:27px;width:64px;float:left;margin-left:2%;line-height:27px;color:#CEF4F6;font-size:18px;font-style:italic;text-shadow:#0361CA 1px 1px 1px; font-weight:bold;}
+.hlife div{height:27px;width:29px;background:url(http://s03.lmbang.com/M00/97/95/eQ519FRRIK-AapjOAAAZdH7rEO0643.png) no-repeat center; background-size:29px 27px;float:left;margin-left:2%;position:relative;}
+.hlife div p{height:25px;width:25px;background:url(http://s02.lmbang.com/M00/97/95/eQ519FRRIMuABPSsAAAGuJxOTnc429.png) no-repeat center; position:absolute; background-size:25px 25px;top:10px;left:0;display:none;}
+.hlife{height:27px;width:100px;float:right;margin-right:5%;}
+
+.rwk{position:absolute;background:url(http://s03.lmbang.com/M00/97/95/eQ519FRRIQ2AIsltAABgS2KStDI852.png) no-repeat center;background-size:161px 112px;height:112px;width:161px;left:50%;margin-left:-80px;bottom:0;}
+.rwx{position:absolute;background:url(http://s08.lmbang.com/M00/A9/52/DhFprFRRIO-AIkMgAABXd57fiYs529.png) no-repeat center;background-size:167px 109px;height:109px;width:169px;left:50%;margin-left:-85px;bottom:0;}
+.zanan{background:url(http://s07.lmbang.com/M00/97/95/eQ519FRRISaAWYNIAAABbIpYExs119.png) no-repeat center;width:31px;height:31px;bottom:20px;background-size:31px 31px;position:absolute;left:5%;}
+.kaishian{background:url(http://s02.lmbang.com/M00/97/96/eQ519FRRI9mAW0gPAAANlVGaZd0846.png) no-repeat center;width:31px;height:31px;bottom:20px;background-size:31px 31px;position:absolute;left:5%;display:none;}
+.time{position:absolute;bottom:40px;right:5%;text-shadow:#0361CA 1px 1px 1px; font-weight:bold;color:#CEF4F6;font-size:10px;}
+.sjtime{position:absolute;bottom:20px;right:5%;text-shadow:#0361CA 1px 1px 1px; font-weight:bold;color:#CEF4F6;font-size:18px;}
+.yd1{position:absolute;width:75px;height:87px;background:url(http://s02.lmbang.com/M00/97/95/eQ519FRRIUeAfK8pAABaLh93TRc787.png) no-repeat center;background-size:75px 87px;}
+.yd2{position:absolute;width:75px;height:87px;background:url(http://s02.lmbang.com/M00/97/95/eQ519FRRIXuAD2g0AAA6Er9s7Uc728.png) no-repeat center;background-size:75px 87px;}
+.yd3{position:absolute;width:75px;height:87px;background:url(http://s01.lmbang.com/M00/A9/53/DhFprFRRIZqADBcDAAAhwGji1ko472.png) no-repeat center;background-size:75px 87px;}
+.yd4{position:absolute;width:75px;height:87px;background:url(http://s08.lmbang.com/M00/97/95/eQ519FRRIcGAM7q-AABQ1GlWoZc924.png) no-repeat center;background-size:75px 87px;}
+.yd5{position:absolute;width:75px;height:87px;background:url(http://s07.lmbang.com/M00/A9/53/DhFprFRRIdyAUQ8LAABGKBezppc772.png) no-repeat center;background-size:75px 87px;}
+.yd6{position:absolute;width:75px;height:87px;background:url(http://s06.lmbang.com/M00/97/95/eQ519FRRIgGAZxqoAACf0gs2xaI161.png) no-repeat center;background-size:75px 87px;}
+.yd7{position:absolute;width:75px;height:87px;background:url(http://s04.lmbang.com/M00/A9/53/DhFprFRRIimAOO9EAAAmLuZUEWw366.png) no-repeat center;background-size:75px 87px;}
+.yd8{position:absolute;width:75px;height:87px;background:url(http://s01.lmbang.com/M00/A9/53/DhFprFRRIk6AcEQgAABigJ3jzxA099.png) no-repeat center;background-size:75px 87px;}
+.yd9{position:absolute;width:75px;height:87px;background:url(http://s08.lmbang.com/M00/A9/53/DhFprFRRImmAKJiKAABHXZuuV1U096.png) no-repeat center;background-size:75px 87px;}
+.yd10{position:absolute;width:75px;height:87px;background:url(http://s07.lmbang.com/M00/97/96/eQ519FRRIyKAKmAAAABgHQOTnMA595.png) no-repeat center;background-size:75px 87px;}
+.yd11{position:absolute;width:75px;height:87px;background:url(http://s05.lmbang.com/M00/97/95/eQ519FRRIWSAJD3OAABCMKdYoJo666.png) no-repeat center;background-size:75px 87px;}
+.yd12{position:absolute;width:75px;height:87px;background:url(http://s02.lmbang.com/M00/A9/53/DhFprFRRIwCAfCL6AABNGBBMvnw809.png) no-repeat center;background-size:75px 87px;}
+.pxtitle{background:url(http://s05.lmbang.com/M00/A9/52/DhFprFRRIHqAJqHgAADpwDgKDNI283.png) no-repeat center;background-size:167px 70px;height:14%;margin-top:3%;}
+.jfcenter{width:258px;height:171px;position:relative;left:50%;margin-left:-129px;margin-top:20px;}
+.bcjf{width:167px;height:150px;background:rgba(101,120,44,0.7);float:left;position:relative;margin-top:15px;}
+.paixing{width:82px;height:171px;background:rgba(101,120,44,0.7); float:left;margin-left:9px;position:relative;}
+.bchead{height:62px;background:url(http://s04.lmbang.com/M00/97/96/eQ519FRRI0aAPT9rAAB0wyDGBDI043.png) no-repeat center;background-size:auto 62px;margin-top:-25px;position:absolute;width:183px;left:-7px;top:-7px;}
+
+@-webkit-keyframes maskAni{
+    0% {-webkit-transform:rotate(0deg);}
+    100% {-webkit-transform:rotate(360deg);}
+}
+@-moz-keyframes maskAni{
+    0% {-moz-transform:rotate(0deg);}
+    100% {-moz-transform:rotate(360deg);}
+}
+.hqfenshu{margin:18px 7px 0px;border-bottom:1px solid #D5F6F7;height:29px;background:url(http://s08.lmbang.com/M00/A9/54/DhFprFRRI3CALn3gAAANyo0v7Wo387.png) no-repeat 20px 0px; background-size:auto 29px;padding-left:52px;line-height:29px;padding-bottom:3px;font-size:24px; overflow:hidden;color:#D5F6F7;}
+.jlpm{padding:6px 7px;height:90px;}
+ul,li{margin:0;padding:0; list-style:none;}
+.pxlist{margin:9px;height:128px;width:64px; overflow:auto;}
+.pxlist li{height:38px;margin-bottom:7px;}
+.pxlist li:last-child{margin-bottom:0px;}
+.mc{height:38px;line-height:38px;color:#fff;font-size:15px; font-weight:bold; float:left;}
+.tx{background:#D5F6F7; float:right;height:37px;width:37px;}
+.tx img{height:37px;width:37px;}
+.pxbnr{height:110px;background:rgba(101,120,44,0.7);width:258px;margin-top:7px;left:50%;margin-left:-129px;position:relative;}
+.ggtp{background:url(http://s06.lmbang.com/M00/97/95/eQ519FRRIgGAZxqoAACf0gs2xaI161.png) left no-repeat;background-size:auto 103px;height:103px;width:90px; float:right;margin-right:5px;margin-top:3px;}
+.chuishui{float:left;padding:5px;width:140px;}
+.zaicizz{height:37px;text-align:center;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;line-height:37px;margin-top:2%;font-size:16px;color:#4E6E02;}
+.fenxiangtd{height:37px;text-align:center;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;line-height:37px;margin-top:2%;font-size:16px;color:#4E6E02;}
+.jsyouxishuoming{height:37px;text-align:center;background:url(http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png) no-repeat center;line-height:37px;margin-top:2%;font-size:16px;color:#4E6E02;width:200px;position:relative;left:50%;margin-left:-100px;}
+.jiafendown{position:absolute;width:50px;height:50px;font-size:18px;color:#1515FF;font-weight:bold;z-index:999; bottom:10px;left:50%;margin-left:-25px;display:none; text-shadow:1px 1px 1px #FFFFFF;}
+#chacha{position:absolute;width:25px;height:25px;background:url(http://s02.lmbang.com/M00/97/95/eQ519FRRIMuABPSsAAAGuJxOTnc429.png) no-repeat center;left:0;top:0;z-index:999;display:none;background-size:25px 25px;}
+.jiafen{position:absolute;width:50px;height:50px;font-size:18px;color:#791BFA; font-weight:bold; display:none;z-index:999;text-shadow:1px 1px 1px #FFFFFF;}
+.goodluck{position:absolute;width:70px;height:50px;font-size:18px;color:#FE2E33;font-weight:bold;z-index:999; top:50%;;left:50%;margin-left:-35px;margin-top:-25px;display:none;text-shadow:1px 1px 1px #FFFFFF;}
+</style>
+</head>
+<body>
+	<div class="qm" ></div>
+    <!--游戏loading-->
+    <div class="load"  >
+        <div class="loading0" id="loading"></div>
+    </div>
+     <!--游戏首页-->
+    <div class="main" id="main" style="display:none;" >
+     <!--游戏强制跳出页面-->
+        <div class="qzsmzz" id="qzsmzz" style="display:none"></div>
+        <div class="qzsm" id="qzsm" style="display:none">
+        <div class="qzsmcl" id="qzsmcl">关闭</div>
+            <img src="http://s07.lmbang.com/M00/A9/52/DhFprFRRH76AXghxAADNhRVeUN8354.png" width="240">
+        </div>
+         <!--游戏强制跳出页面结束-->
+        <div class="banner"></div>
+        <div class="dabenxiang"></div>
+        <div class="kaishiyouxi" id="kaishiyouxi">开始游戏</div>
+        <div class="jifenbang" id="jifenbang">积分榜</div>
+        <div class="youxishuoming" id="youxishuoming">游戏说明</div>
+    </div>
+     <!--游戏说明-->
+    <div class="main" id="yxsm" style="display:none;">
+    	<div class="tcsm1" id="tcsm1">
+     	 	<div style="width:150px;height:150px;position:absolute;right:13%;bottom:8%;" id="dijizd"></div>
+       	  <div class="xiayiye" id="xiayiye1">下一页</div>
+        </div>
+	    <div class="tcsm4" id="tcsm4" style="display:none;">
+
+            <div class="xiayiye4" id="xiayiye4">下一页</div>
+        </div>
+        <div class="tcsm2" id="tcsm2" style="display:none;">
+
+            <div class="xiayiye2" id="xiayiye2">下一页</div>
+        </div>
+         <div class="tcsm3" id="tcsm3" style="display:none;">
+        	<div style="width:150px;height:150px;position:absolute;left:15%;top:25%;"  id="dijickzj"></div>
+            <div class="xiayiye" id="xiayiye3">返回游戏</div>
+        </div>
+    </div>
+     <!--游戏进入倒计时-->
+    <div class="main" style="display:none;" id="djsym">
+    	<div class="yxtitle"></div>
+        <div class="djs3" id="djs"></div>
+    </div>
+     <!--游戏页-->
+    <div class="main" style="display:none;" id="youxi">
+    <div class="jiafen" id="jiafen">PERFECT!<br>+7</div>
+    <div class="jiafendown" id="jiafendown">PERFECT!<br>+7</div>
+     <div class="goodluck" id="goodluck"> GOOD LUCK!<br>+0</div>
+    <div class="chacha" id="chacha"></div>
+    	<div class="header">
+        	<div class="htitle"></div>
+            <div class="hfenshu" id="hfenshu">0</div>
+            <div class="hlife" id="hlife">
+                <div><p></p></div>
+                <div><p></p></div>
+                <div><p></p></div>
+            </div>
+            <div class="zanan" id="zanan"></div>
+            <div class="kaishian" id="kaishian"></div>
+            <div class="rwk" id="renwu"></div>
+
+                 <div class="time">TIME</div>
+                 <div class="sjtime" id="sjtime">3:00</div>
+            </div>
+        </div>
+     <!--游戏排行榜-->
+    <div class="main" id="pxby" style="display:none;">
+    	<div class="pxtitle"></div>
+        <div class="jfcenter">
+            <div class="bcjf">
+            	<div class="bchead"></div>
+                <div class="hqfenshu">123123</div>
+                <div class="jlpm">
+                	<div style="font-size:15px;color:#fff;">历史最高记录</div>
+                    <div style="text-align:center;color:#fff;font-size:21px; font-weight:bold;">287000</div>
+                    <div style="font-size:15px;color:#fff;">排名</div>
+                    <div style="text-align:center;color:#fff;font-size:21px; font-weight:bold;">287000</div>
+                </div>
+            </div>
+            <div class="paixing">
+            	<div style="color:#851222;text-align:center;font-size:18px;text-shadow:#DDF8F8 -1px 1px; margin-top:5px;">好友排行</div>
+                    <ul class="pxlist">
+                        <li><div class="mc">1</div><div class="tx"></div></li>
+                        <li><div class="mc">2</div><div class="tx"></div></li>
+                        <li><div class="mc">3</div><div class="tx"></div></li>
+                         <li><div class="mc">5</div><div class="tx"></div></li>
+                          <li><div class="mc">6</div><div class="tx"></div></li>
+                    </ul>
+            </div>
+
+        </div>
+       <div class="pxbnr">
+       		<div class="chuishui">
+            	<p style="color:#fff;font-size:9px;margin-bottom:3px;">亲爱的辣妈:</p>
+                <p style="color:#fff;font-size:9px;line-height:12px; overflow:auto;">酸甜口味的钙剂影响宝宝味蕾发育，导致宝宝不爱喝水、偏食厌食。因此宝宝第一口钙的口味至关重要，淡奶味才是最适合宝宝的。</p>
+                 <p style="color:#fff;font-size:9px;line-height:12px; text-align:right;">迪巧美国补钙专家</p>
+            </div>
+        	<div class="ggtp"></div>
+       	</div>
+        <div class="zaicizz" id="zaicizz">再次作战</div>
+        <div class="fenxiangtd" id="fenxiangtd" onclick="gotid('goToOCPage','1001','9554936');">分享通道</div>
+         <div class="jsyouxishuoming" id="jsyouxishuoming">游戏说明</div>
+        <div style="font-size:10px;width:242px;position:relative; left:50%;margin-left:-121px;color:#fff;">温馨提示：点击分享按钮，回到帖子参与互动分享。分享保卫味蕾游戏置顶帖给好友，还有机会获得我们送出的幸运奖哦！</div>
+    </div>
+
+<script type="text/javascript">
+//所有功能必须包含在 WeixinApi.ready 中进行
+WeixinApi.ready(function(Api){
+    // 微信分享的数据
+    var wxData = {
+        "imgUrl":"http://s05.lmbang.com/M00/97/93/eQ519FRRHhSANLUJAAAX6AYOvCw022.png",
+        "link":'http://ad.lmbang.com/event/diqiao/',
+        "desc":"来保护宝宝的味蕾吧",
+        "title":"迪巧--保护味蕾"
+    };
+
+    // 分享的回调
+    var wxCallbacks = {
+        // 分享操作开始之前
+        ready:function () {
+            // 你可以在这里对分享的数据进行重组
+
+        },
+        // 分享被用户自动取消
+        cancel:function (resp) {
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+        },
+        // 分享失败了
+        fail:function (resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+        },
+        // 分享成功
+        confirm:function (resp) {
+            // 分享成功了，我们是不是可以做一些分享统计呢？
+        },
+        // 整个分享过程结束
+        all:function (resp) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+        }
+    };
+
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+    // 显示菜单
+    Api.showOptionMenu();
+});
+	var weixin = 0;
+	if(weixin)
+	{
+		WeixinJSBridge.call('showOptionMenu');
+	}
+
+
+</script>
+
+
+<script>
+var imgPath = "/static/images/diqiao/";
+var loadImage = function(path, callback){
+	var img = new Image();
+	img.onload = function(){
+		img.onload = null;
+		callback(path);
+	}
+	img.src = path;
+}
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+function sendUserStatus(){
+	 var postUrl = '/event/diqiaoUser/';
+	 $.post(postUrl, {"page" : 1, "type" : 1}, function(json){
+
+    }, 'json');
+}
+function sendUserScore(score){
+	 var postUrl = '/event/diqiaoUserScore/';
+	 $.post(postUrl, {"score" : score}, function(json){
+		if(json.ret == 0){
+			window.location.href = '/event/diqiaoResult/?type=1';
+		}else
+		{
+			alert(json.msg);
+			window.location.href = '/event/diqiao/';
+		}
+   }, 'json');
+}
+function gotid(cmd,parameter1,parameter2){
+	 var os = "android";
+	 if(os == 'ios'){
+	 	
+	 	document.location="objc://"+cmd+"?"+"typeid="+parameter1 +"&typevalue="+parameter2;
+	 }
+	 else{
+		 document.location='lmbang://hotmom.lmbang.com?tid=9554936&type=20';
+	 }
+	 //document.location='lmbang://hotmom.lmbang.com?tid=9554936&type=20';
+	 //document.location="objc://"+cmd+"?"+"typeid="+parameter1 +"&typevalue="+parameter2;
+}
+//加载图片
+var loadingPage = (function(){
+    var sourceArr = ["http://s03.lmbang.com/M00/A9/50/DhFprFRRHbKAWLs8AAAX9D2W1cI803.png","http://s07.lmbang.com/M00/97/93/eQ519FRRHfKAE32hAAAbs-y4toc168.png","http://s05.lmbang.com/M00/97/93/eQ519FRRHhSANLUJAAAX6AYOvCw022.png","http://s06.lmbang.com/M00/A9/50/DhFprFRRHkiAASaMAAAH2jLQMNw480.jpg","http://s02.lmbang.com/M00/A9/51/DhFprFRRHqyAXC3GAAATdRBJe5s279.png","http://s04.lmbang.com/M00/A9/51/DhFprFRRHwOAATFLAAHrlL0YAho346.png","http://s01.lmbang.com/M00/97/94/eQ519FRRHzWAHPUGAAAN9n0nY4E447.png","http://s06.lmbang.com/M00/A9/51/DhFprFRRH1KAFDHHAAAYqJH8nO4492.png","http://s01.lmbang.com/M00/A9/51/DhFprFRRH3OAO70eAAAaCvzTBAY963.png","http://s05.lmbang.com/M00/A9/51/DhFprFRRH5aAfHJtAABRTiTdD0k895.png","http://s01.lmbang.com/M00/97/93/eQ519FRRHoaAYkHlAAAkUMuEGBQ383.jpg","http://s07.lmbang.com/M00/A9/52/DhFprFRRH76AXghxAADNhRVeUN8354.png",
+	"http://s03.lmbang.com/M00/97/94/eQ519FRRH_CAZAyPAAP2uoWSSTc076.png","http://s01.lmbang.com/M00/AA/09/DhFprFRR1huAaXL5AALWQDibtPM252.png","http://s01.lmbang.com/M00/97/94/eQ519FRRIC-AHKVKAAJ7rzQgwcQ522.png","http://s05.lmbang.com/M00/A9/52/DhFprFRRIHqAJqHgAADpwDgKDNI283.png","http://s03.lmbang.com/M00/97/95/eQ519FRRIK-AapjOAAAZdH7rEO0643.png","http://s03.lmbang.com/M00/97/95/eQ519FRRIQ2AIsltAABgS2KStDI852.png","http://s08.lmbang.com/M00/A9/52/DhFprFRRIO-AIkMgAABXd57fiYs529.png","http://s07.lmbang.com/M00/97/95/eQ519FRRISaAWYNIAAABbIpYExs119.png","http://s02.lmbang.com/M00/97/95/eQ519FRRIUeAfK8pAABaLh93TRc787.png","http://s02.lmbang.com/M00/97/95/eQ519FRRIXuAD2g0AAA6Er9s7Uc728.png","http://s01.lmbang.com/M00/A9/53/DhFprFRRIZqADBcDAAAhwGji1ko472.png","http://s08.lmbang.com/M00/97/95/eQ519FRRIcGAM7q-AABQ1GlWoZc924.png","http://s07.lmbang.com/M00/A9/53/DhFprFRRIdyAUQ8LAABGKBezppc772.png","http://s06.lmbang.com/M00/97/95/eQ519FRRIgGAZxqoAACf0gs2xaI161.png",
+	"http://s04.lmbang.com/M00/A9/53/DhFprFRRIimAOO9EAAAmLuZUEWw366.png","http://s01.lmbang.com/M00/A9/53/DhFprFRRIk6AcEQgAABigJ3jzxA099.png","http://s08.lmbang.com/M00/A9/53/DhFprFRRImmAKJiKAABHXZuuV1U096.png","http://s07.lmbang.com/M00/97/96/eQ519FRRIyKAKmAAAABgHQOTnMA595.png","http://s05.lmbang.com/M00/97/95/eQ519FRRIWSAJD3OAABCMKdYoJo666.png","http://s02.lmbang.com/M00/A9/53/DhFprFRRIwCAfCL6AABNGBBMvnw809.png","http://s04.lmbang.com/M00/97/96/eQ519FRRI0aAPT9rAAB0wyDGBDI043.png","http://s08.lmbang.com/M00/A9/54/DhFprFRRI3CALn3gAAANyo0v7Wo387.png"];
+    /*
+    for (var i = 0; i < sourceArr.length; i++) {
+        sourceArr[i] = (imgPath + sourceArr[i]);
+    };
+    */
+    var imgLoader = function(imgs, callback){
+        var len = imgs.length, i = 0;
+        while(imgs.length){
+            loadImage(imgs.shift(), function(path){
+                callback(path, ++i, len);
+            });
+        }
+    }
+    imgLoader(sourceArr, function(path, curNum, total){
+        var percent = curNum/total;
+		if(curNum==28){
+			document.getElementById("loading").className="loading";
+			document.getElementById("loading").innerHTML="0%";
+		}
+		if(curNum==17){
+			document.getElementById("loading").className="loading5";
+			document.getElementById("loading").innerHTML="50%";
+		}
+        if(percent == 1){
+            //loading页隐藏
+			document.getElementById("loading").className="loading10";
+			document.getElementById("loading").innerHTML="100%";
+		   setTimeout(function(){
+				var domLoading = document.querySelector('.load');
+            	removeElement(domLoading);
+		        document.getElementById("main").style.display = "block";
+				 //强制说明页显示,用户第一次进来的时候显示，别的时候隐藏，如果显示，则在5秒后隐藏
+				 var isFirst = "";
+				 if(isFirst){
+					 document.getElementById("qzsmzz").style.display = "block";
+					 document.getElementById("qzsm").style.display = "block";
+					 setTimeout(function(){
+						 sendUserStatus();
+					 	 document.getElementById("qzsm").style.display = "none";
+						 document.getElementById("qzsmzz").style.display = "none";
+					 },5000)
+				 }
+				 var restart = "0";
+				 if(restart > 0){
+					 show(qq("djsym"));
+					 daojis();
+				}
+			},500);
+        }
+    });
+})();
+</script>
+
+<script>
+	//倒计时
+	var indextime = 180;
+	//是否暂停
+	var isks =true;
+	//定时器
+	var timer=null;
+	//屏幕宽高
+	var cWidth=window.innerWidth;
+	var cHeight=window.innerHeight;
+	var jiange = (cHeight>400?34:20);
+	var jiasd = (cHeight>400?2:1);
+	var arrleft=[];
+	for(var i=0;i<parseInt(cWidth/35);i++){
+		arrleft.push(i*35);
+	}
+	arrleft.sort(function(){ return 0.5 - Math.random() });
+
+	//分数
+	var count=0;
+	//rand
+	var suiji = 0;
+	//往页面增加元素
+	var qm =qq("qm");
+	//定时器
+	var yxtimer=null;
+	//定时器
+	var scyxtimer=null;
+	//记录页面box数
+	var arrBox=[];
+	//初始化box数目。每一分钟+1；
+	var indexbox=2;
+	//初始化boxY轴速度，每一分钟+2；
+	var speedy=4;
+	var jiafen = qq("jiafen");
+	var jaftime=null;
+	var jiafendown=qq("jiafendown");
+	var jaftimed=null;
+	var chac=qq("chacha");
+	var chatime=null;
+	var timelive = 450;
+	var jlcs=0;
+	var goodluck = qq("goodluck");
+	var goodlucktime=null;
+	//游戏页面去除移动事件的默认行为
+
+	//增加数组删除对象的方法
+	Array.prototype.remove=function(obj){
+		for(var i=0;i<this.length;i++){
+			if(obj==this[i]){
+				this.splice(i,1);
+				return;
+			}
+		}
+	}
+	//box类，增加页面元素
+	function Box(i){
+		var ele = document.createElement("div");
+		var tp = parseInt((Math.floor(Math.random() * 130 + 10))/10);
+		tp=(tp>12?12:tp);
+		this.isjf = tp;
+		var sel =this;
+		var str = "yd"+tp;
+		ele.className=str;
+		this.element=ele;
+		//var islorr = Math.random()*cWidth;
+		var islorr = arrleft[i];
+
+		//if(i==0 || i==1){
+			ele.style.top="0px";
+			this.top=0;
+		//}else{
+			//ele.style.top=(2*jiange)+(Math.random()*20+10)+"px";
+			//this.top=(2*jiange)+(Math.random()*20+10);
+		//}
+		//if(islorr>=cWidth-70){
+		//	islorr=cWidth-(Math.random()*40+40);
+		//}
+		this.left=islorr;
+		ele.style.left=islorr+"px";
+		this.speedX=((islorr>(cWidth/2))?-1:1);
+		if(suiji%9==2){
+			this.speedY=parseInt(speedy)+Math.ceil(Math.random()*3);
+		}else{
+			this.speedY=speedy;
+		}
+		this.ismovel=1;
+		document.body.insertBefore(ele,qm);
+	}
+	//box 移动
+	Box.prototype={
+			move:function(){	
+				var self=this;
+				self.left+=(self.speedX);
+				self.top+=(self.speedY*1.1);
+				self.element.style.left=self.left+"px";
+				self.element.style.top=self.top+"px";
+				if(parseInt(self.element.style.top)>=cHeight ||  parseInt(self.element.style.top)<0){
+					arrBox.remove(self);
+					self.element.ontouchstart=null;
+					document.body.removeChild(self.element);
+					if(self.isjf>=1 && self.isjf<6){
+						if(parseInt(self.element.style.top)<0){
+							jlcs=0;
+							removelife();
+							qq("renwu").className="rwk";
+						}else{
+							qq("renwu").className="rwx";
+							clearTimeout(jaftimed);
+							jiafendown.innerHTML="GOODJOB!<br>+6";
+							jiafendown.style.display="block";
+							jaftimed=setTimeout(function(){
+								jiafendown.style.display="none";
+							},500);
+							count+=6;
+							jlcs++;
+							if(jlcs==5){
+								jlcs=0;
+								if((Math.random()*2)>1){
+									var sjfenshu=Math.floor(Math.random()*30);
+									count+=sjfenshu;
+									clearTimeout(goodlucktime);
+									goodluck.innerHTML="GOODLUCK!<br>+"+sjfenshu;
+									goodluck.style.display="block";
+									goodlucktime=setTimeout(function(){
+										goodluck.style.display="none";
+									},500);
+								}
+							}
+						}
+					}else if(self.isjf==6){
+						if(parseInt(self.element.style.top)<0){
+							qq("renwu").className="rwk";
+							jlcs=0;
+							removelife();
+						}else{
+							clearTimeout(jaftimed);
+							jiafendown.innerHTML="PERFECT!<br>+8";
+							jiafendown.style.display="block";
+							jaftimed=setTimeout(function(){
+								jiafendown.style.display="none";
+							},500);
+							count+=8;
+							jlcs++;
+							if(jlcs==5){
+								jlcs=0;
+								if((Math.random()*2)>1){
+									var sjfenshu=Math.floor(Math.random()*30);
+									count+=sjfenshu;
+									clearTimeout(goodlucktime);
+									goodluck.innerHTML="GOODLUCK!<br>+"+sjfenshu;
+									goodluck.style.display="block";
+									goodlucktime=setTimeout(function(){
+										goodluck.style.display="none";
+									},500);
+								}
+							}
+							qq("renwu").className="rwx";
+						}
+						
+					}else{
+						if(parseInt(self.element.style.top)>=cHeight){
+							qq("renwu").className="rwk";
+							removelife();
+							jlcs=0;
+						}else{
+							qq("renwu").className="rwx";
+							count+=7;
+							jlcs++;
+							if(jlcs==5){
+								jlcs=0;
+								if((Math.random()*2)>1){
+									var sjfenshu=Math.floor(Math.random()*30);
+									count+=sjfenshu;
+									clearTimeout(goodlucktime);
+									goodluck.innerHTML="GOODLUCK!<br>+"+sjfenshu;
+									goodluck.style.display="block";
+									goodlucktime=setTimeout(function(){
+										goodluck.style.display="none";
+									},500);
+								}
+							}
+							
+						}
+					}
+
+				}
+				
+			}
+
+	}
+
+	eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('1 l=L(){n(A==3||y==0){k=c;h(1 i=0;i<4.j;i++){8.x.w(4[i].z)}8.C("B",v,c);o(u);1 t=p r().s();1 e=t.b()+\'|\'+m.b();1 6=2.a.d.g(\'f\');1 5=2.a.d.g(\'f\');1 9=2.N.M(e,6,{5:5,7:2.7.D,I:2.H.G});J(9)}h(1 i=0;i<4.j;i++){4[i].F()}n(k){O("P").K=m;E.q(l)}}',52,52,'|var|CryptoJS||arrBox|iv|key|mode|document|encrypted|enc|toString|false|Latin1|data|1111111111111111|parse|for||length|isks|drawBox|count|if|clearTimeout|new|requestAnimationFrame|Date|getTime||scyxtimer|zzmr|removeChild|body|indextime|element|life|touchmove|removeEventListener|CBC|window|move|ZeroPadding|pad|padding|sendUserScore|innerHTML|function|encrypt|AES|qq|hfenshu'.split('|'),0,{}))
+
+	 window.requestAnimationFrame(drawBox);
+	 //创建图像
+	function createBox(){
+		//for(var i=0;i<indexbox;i++){
+		//	arrBox.push(new Box(i));
+		//}
+		suiji ++;
+		arrBox.push(new Box(0));
+		setTimeout(function(){
+			arrBox.push(new Box(1));
+			if(indexbox==3 || indexbox==4){
+				setTimeout(function(){
+					arrBox.push(new Box(2));
+					if(indexbox==4){
+						setTimeout(function(){
+							arrBox.push(new Box(3));
+						},timelive);
+					}
+				},timelive);
+			}
+		},timelive);
+		arrleft.sort(function(){ return 0.5 - Math.random() });
+		if(isks){
+			scyxtimer=setTimeout(createBox,3000);
+		}
+	}
+	//开始游戏
+	function gameinit(){
+		daojishi();
+		createBox();
+		document.addEventListener("touchmove",zzmr,false);
+	}
+	//增加阻止默认事件
+	var zzmr=function(ev){
+		var ev=ev||window.event;
+		var px = ev.changedTouches[0].clientX;
+		var py = ev.changedTouches[0].clientY;
+		for(var i=0;i<arrBox.length;i++){
+			if(arrBox[i].left>px || arrBox[i].left+75<px || arrBox[i].top>py || arrBox[i].top+78<py){
+			}else{
+				if(arrBox[i].ismovel==1){
+					if(arrBox[i].isjf>6){
+						clearTimeout(jaftime);
+						jiafen.style.left=arrBox[i].left+"px";
+						jiafen.style.top=arrBox[i].top+"px";
+						jiafen.style.display="block";
+						jaftime=setTimeout(function(){
+							jiafen.style.display="none";
+						},500)
+					}else{
+						clearTimeout(chatime);
+						chac.style.left=arrBox[i].left+"px";
+						chac.style.top=arrBox[i].top+"px";
+						chac.style.display="block";
+						chatime=setTimeout(function(){
+							chac.style.display="none";
+						},500);
+					}
+					arrBox[i].ismovel=0;
+					arrBox[i].speedX*=-1;
+					arrBox[i].speedY*=-3;
+				}
+			}
+		}
+		ev.preventDefault();
+	}
+	//倒计时
+	function daojishi(){
+		indextime--;
+		var fen = (parseInt(indextime/60)>0)?(parseInt(indextime/60)+":"):"0:";
+		var miao = (parseInt(indextime%60))>9?parseInt(indextime%60):"0"+parseInt(indextime%60)
+		qq("sjtime").innerHTML=fen+miao;
+		if (indextime==155){
+			//indexbox++;
+			//speedy+=jiasd;
+			timelive-=80;
+		}else if(indextime==135){
+			indexbox++;
+			speedy+=jiasd;
+			timelive-=80;
+		}else if(indextime==80){
+			//indexbox++;
+			//speedy+=jiasd;
+			timelive-=50;
+		}
+		else if(indextime==59){
+			indexbox++;
+			speedy+=jiasd;
+			timelive-=100;
+		}
+		if(indextime==0){
+			document.removeEventListener("touchmove",zzmr,false);
+			clearTimeout(timer);
+			clearTimeout(scyxtimer);
+		}
+		if(isks && indextime>0){
+			timer=setTimeout(daojishi,1000);
+		}
+	}
+	//暂停
+	bind(qq("zanan"),"touchstart",function(){
+		qq("zanan").style.display="none";
+		qq("kaishian").style.display="block";
+		document.removeEventListener("touchmove",zzmr,false);
+		isks=!isks;
+		clearTimeout(timer);
+		clearTimeout(scyxtimer);
+
+	});
+	bind(qq("kaishian"),"touchstart",function(){
+		qq("zanan").style.display="block";
+		qq("kaishian").style.display="none";
+		document.addEventListener("touchmove",zzmr,false);
+		isks=!isks;
+		timer=setTimeout(daojishi,1000);
+		scyxtimer=setTimeout(createBox,3000);
+		drawBox();
+});
+	function qq(id){
+		return document.getElementById(id);
+	}
+	function hide(obj){
+		obj.style.display="none";
+	}
+	function show(obj){
+		obj.style.display="block";
+	}
+	function bind(obj,type,fn){
+		if(obj.addEventListener){
+			obj.addEventListener(type,fn,false);
+		}else if(obj.attachEvent){
+			obj.attachEvent("on" + type, fn);
+		}else{
+			obj["on" + type] = fn;
+		}
+	}
+	bind(qq("qzsmcl"),"click",function(){
+		sendUserStatus();
+		hide(qq("qzsm"));
+		hide(qq("qzsmzz"));
+	});
+	bind(qq("youxishuoming"),"click",function(){
+		hide(qq("main"));
+		show(qq("yxsm"));
+	});
+	bind(qq("xiayiye1"),"click",function(){
+		hide(qq("tcsm1"));
+		show(qq("tcsm4"));
+	});
+	bind(qq("xiayiye4"),"click",function(){
+		hide(qq("tcsm4"));
+		show(qq("tcsm2"));
+	});
+	bind(qq("xiayiye2"),"click",function(){
+		hide(qq("tcsm2"));
+		show(qq("tcsm3"));
+	});
+	bind(qq("xiayiye3"),"click",function(){
+		hide(qq("tcsm3"));
+		hide(qq("yxsm"));
+		hide(qq("qzsm"));
+		show(qq("main"));
+		show(qq("tcsm1"));
+	});
+
+	bind(qq("kaishiyouxi"),"click",function(){
+		// if("1" == "1")
+		// {
+		// 	alert('请先登录再进行游戏！');
+		// 	window.location.href="http://m.lmbang.com/user/login?return_uri=http%3A%2F%2Fad.lmbang.com%2Fevent%2Fdiqiao%2F";
+		// 	return '';
+		// }
+		// $.post('http://ad.lmbang.com/popularize?key=DSiyFZ', {}, function(json){ }, 'json');
+		show(qq("djsym"));
+		daojis();
+	});
+	bind(qq("dijizd"),"click",function(){
+		gotid('goToOCPage','1001','9554936');
+	});
+	bind(qq("dijickzj"),"click",function(){
+
+		gotid('goToOCPage','1001','9554936');
+	});
+	bind(qq("jifenbang"),"click",function(){
+		// window.location.href="/event/diqiaoResult/";
+	});
+	bind(qq("zaicizz"),"touchstart",function(){
+		// window.location.href="/event/diqiao/";
+	});
+	bind(qq("fenxiangtd"),"touchstart",function(){
+		// window.location.href="/event/diqiao/";
+	});
+
+
+
+
+
+	//开始游戏倒计时
+	var djs=4;
+	function daojis(){
+		djs--;
+		var str ="djs"+djs;
+		qq("djs").className=str;
+		if(djs>0){
+			setTimeout(daojis,1000);
+		}else{
+			setTimeout(function(){
+				hide(qq("djsym"));
+				show(qq("youxi"))
+				gameinit();
+			},500);
+		}
+	}
+	//生命值加减
+	var life =0;
+	function removelife(){
+		if(life<3){
+			qq("hlife").getElementsByTagName("div")[(2-life)].getElementsByTagName("p")[0].style.display="block";
+			life++;
+		}
+	}
+	//切换哭和笑图片
+	function qiehuantp(){
+		var rwid =qq("renwu");
+		if(renwu.className=="rwk"){
+			renwu.className="rwx";
+		}else{
+			renwu.className="rwk";
+		}
+	}
+</script>
+
+</body>
+</html>
